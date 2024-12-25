@@ -8,7 +8,7 @@ class Category(models.Model):
 
 
     def __str__(self):
-        return f'{self.name_c}. {self.description_c}.'
+        return f'\n\nНаименование категории товаров: {self.name_c}\nОписание категории товаров: {self.description_c}'
 
     class Meta:
         verbose_name = 'Категория'
@@ -25,9 +25,26 @@ class Product(models.Model):
     updated_at = models.DateField(auto_now=True, verbose_name='Дата последнего изменения')
 
     def __str__(self):
-        return f'{self.name_p}. {self.category}. {self.price_by}. {self.updated_at}. {self.description_p}.'
+        return (f'\n\nНаименование товара: {self.name_p}\nКатегория товаров: {self.category.name_c}'
+                f'\nЦена: {self.price_by}\nОписание товара: {self.description_p}.')
 
     class Meta:
         verbose_name = 'Продукт'
         verbose_name_plural = 'Продукты'
-        ordering = ['name_p']
+        ordering = ['updated_at', 'name_p']
+
+class Contact(models.Model):
+    legal_address = models.TextField(null=True, blank=True, verbose_name='Юридический адрес')
+    mailing_address = models.TextField(null=True, blank=True, verbose_name='Почтовый адрес')
+    email = models.EmailField(unique=True, verbose_name='E-mail')
+    tel = models.CharField(max_length=50, verbose_name='Телефон')
+
+
+    def __str__(self):
+        return (f'\n\nЮридический адрес: {self.legal_address}\nПочтовый адрес: {self.mailing_address}'
+                f'\nE-mail: {self.email}\nТелефон: {self.tel}.')
+
+    class Meta:
+        verbose_name = 'Контакт'
+        verbose_name_plural = 'Контакты'
+

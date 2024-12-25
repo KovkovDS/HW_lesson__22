@@ -9,7 +9,7 @@
 </head>
 <body>
 <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
-    <h5 class="my-0 mr-md-auto font-weight-normal">Skystore</h5>
+    <h5 class="my-0 mr-md-auto font-weight-normal">KODI Store</h5>
     <nav class="ms-5">
         <a class="p-2 btn btn-outline-primary" href="/">Каталог</a>
         <a class="p-2 btn btn-outline-primary" href="/contacts/">Контакты</a>
@@ -17,37 +17,106 @@
 </div>
 
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-    <h1 class="display-4">Skystore</h1>
-    <p class="lead">Skystore - это отличный вариант хранения ваших плагинов и примеров кода, который вы бы хотели
-        продать</p>
+    <h1 class="display-4">KODI Store</h1>
+    <p class="lead">KODI store - это большой выбор продуктов питания.<br>
+        Вы любите мороженное? :)<br>
+        Мы оченЬ! :)<br>
+        Попробуйте наше мороженое, Вы не останетесь равнодушными к нашей продукции! :)<br>
+    Также у нас в ассортименте есть продукты глубокой заморозки, рыба и морепродукты, и много другое</p>
 </div>
 
 <div class="container">
-    <div class="row text-center">
-        <div class="col-3">
-            <div class="card mb-4 box-shadow">
-                <div class="card-header">
-                    <h4 class="my-0 font-weight-normal">Удобный сервис рассылок</h4>
-                </div>
-                <div class="card-body">
-                    <h1 class="card-title pricing-card-title">$ 140</h1>
-                    <ul class="list-unstyled mt-3 mb-4 text-start m-3">
-                        <li>- Неограниченная лицензия</li>
-                        <li>- Поддержка</li>
-                        <li>- Установка на сервер</li>
-                        <li>- Получение обновлений</li>
-                    </ul>
-                    <button type="button" class="btn btn-lg btn-block btn-outline-primary">Купить</button>
-                </div>
+    <div class="row">
+        <div class="col-6" style="padding: 70px;">
+          <div class="card text-bg-light">
+            <h4 class="card-header p-3 text-center">{{product_1.name_p}}</h4>
+            <div class="card-body">
+              <h1 class="text-center">{{product_1.price_by}}</h1>
+              <div class="mb-3">
+                <p class="card-text text-center">
+                  {{product_1.description_p}}
+                </p>
+              </div>
+              <div class="d-grid gap-2">
+                <button type="button" class="btn btn-outline-primary" disabled>Купить</button>
+              </div>
             </div>
+          </div>
+        </div>
+        <div class="col-6" style="padding: 70px;">
+          <div class="card text-bg-light">
+            <h4 class="card-header p-3 text-center">{{product_2.name_p}}</h4>
+            <div class="card-body">
+              <h1 class="text-center">{{product_2.price_by}}</h1>
+              <div class="mb-3">
+                <p class="card-text text-center">
+                  {{product_2.description_p}}
+                </p>
+              </div>
+              <div class="d-grid gap-2">
+                <button type="button" class="btn btn-outline-primary" disabled>Купить</button>
+              </div>
+            </div>
+          </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-4" style="padding: 70px; padding-bottom: 0px">
+          <div class="card text-bg-light">
+             <h4 class="card-header p-3 text-center">{{product_3.name_p}}</h4>
+            <div class="card-body">
+              <h1 class="text-center">{{product_3.price_by}}</h1>
+              <div class="mb-3">
+                <p class="card-text text-center">
+                  {{product_3.description_p}}
+                </p>
+              </div>
+              <div class="d-grid gap-2">
+                <button type="button" class="btn btn-outline-primary" disabled>Купить</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-4" style="padding: 70px; padding-bottom: 0px">
+          <div class="card text-bg-light">
+             <h4 class="card-header p-3 text-center">{{product_4.name_p}}</h4>
+            <div class="card-body">
+              <h1 class="text-center">{{product_4.price_by}}</h1>
+              <div class="mb-3">
+                <p class="card-text text-center">
+                  {{product_4.description_p}}
+                </p>
+              </div>
+              <div class="d-grid gap-2">
+                <button type="button" class="btn btn-outline-primary" disabled>Купить</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-4" style="padding: 70px; padding-bottom: 0px">
+          <div class="card text-bg-light">
+             <h4 class="card-header p-3 text-center">{{product_5.name_p}}</h4>
+            <div class="card-body">
+              <h1 class="text-center">{{product_5.price_by}}</h1>
+              <div class="mb-3">
+                <p class="card-text text-center">
+                  {{product_5.description_p}}
+                </p>
+              </div>
+              <div class="d-grid gap-2">
+                <button type="button" class="btn btn-outline-primary" disabled>Купить</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
 
     <footer class="pt-4 my-md-5 pt-md-5 border-top">
         <div class="row">
             <div class="col-12 col-md">
-                SkyStore
-                <small class="d-block mb-3 text-muted">&copy; 2023</small>
+                KODI Store
+                <small class="d-block mb-3 text-muted">&copy; 2024</small>
             </div>
             <div class="col-6 col-md">
                 <h5>Категории</h5>
