@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto">
-    <h1 class="display-4">{% block title %}Добавление продукта{% endblock %}</h1>
+    <h1 class="display-4">{% block title %}Добавление товара{% endblock %}</h1>
 </div>
 <div class="col-lg-3 col-md-6 col-sm-12">
     <div class="card mb-4 box-shadow">
@@ -14,27 +14,28 @@
                 {% csrf_token %}
                 <div class="mb-3">
                     <label for="name_p">Название товара</label>
-                    <input type="text" name="name" class="form-control" id="name_p" required>
+                    <input type="text" name="name_p" class="form-control" id="name_p" required>
                 </div>
                 <div class="mb-3">
                     <label for="price_by">Цена товара</label>
-                    <input type="text" name="message" class="form-control" id="price_by" required>
+                    <input type="text" name="price_by" class="form-control" id="price_by" required>
                 </div>
                 <div class="mb-3">
                     <label for="description_p">Описание товара</label>
-                    <input type="text" name="phone" class="form-control" id="description_p" required>
+                    <input type="text" name="description_p" class="form-control" id="description_p">
                 </div>
                 <div class="mb-3">
                     <label for="picture">Фото товара</label>
-                    <input type="file" name="phone" class="form-control" id="picture" disabled>
+                    <input type="file" name="picture" class="form-control" id="picture" required>
                 </div>
-<!--                <div class="mb-3">-->
-<!--                    <label for="create_at">Дата добавления товара: {{product.create_at}}</label>-->
-<!--                    <input type="text" name="phone" class="form-control" id="create_at" required>-->
-<!--                </div>-->
+                <div class="mb-3">
+                    <label for="category_id">Категория товаров</label>
+                    <input type="text" name="category_id" class="form-control" id="category_id" required>
+                </div>
                 <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Добавить товар</button>
             </form>
         </div>
     </div>
 </div>
+<a class="btn btn-outline-primary m-5" href="{% url 'catalog:home' %}" role="button"><<...Вернуться к каталогу</a>
 {% endblock %}

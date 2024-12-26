@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from catalog.models import Product, Contact
 from django.core.paginator import Paginator
-import psycopg2
+import time
 
 
 def home(request):
@@ -37,13 +37,23 @@ def product_detail(request, product_id):
     return render(request, 'product.html', context)
 
 
+def added_product(request, name_p):
+    return render(request, 'added_product.html', {'name_p': name_p})
+
+
 def adding_product(request):
     if request.method == 'POST':
         name_p = request.POST.get('name_p')
         price_by = request.POST.get('price_by')
         description_p =request.POST.get('description_p')
         picture = request.POST.get('picture')
+        category_id = request.POST.get('category_id')
         new_product = Product.objects.create(name_p=name_p, price_by=price_by, description_p=description_p,
-                                             picture=picture)
-        return HttpResponse(f'Товар {name_p} добавлен.'), render(request, 'home.html')
+                                             picture=picture, category_id=category_id)
+        request.method = 'GET'
+        # added_product(request, name_p)
+        # render(request, 'added_product.html', {'name_p': name_p})
+        # time.sleep(1)
+        # return HttpResponseRedirect('/')
+        return added_product(request, name_p)
     return render(request, 'adding_product.html')
