@@ -5,11 +5,10 @@ from catalog.models import Product, Contact
 
 
 def home(request):
-    five_latest_products = Product.objects.all()[0:5]
+    five_latest_products = Product.objects.all()[:5]
     print(*five_latest_products)
-    return render(request, 'home.html', {'product_1': five_latest_products[0],
-                                         'product_2': five_latest_products[1], 'product_3': five_latest_products[2],
-                                         'product_4': five_latest_products[3], 'product_5': five_latest_products[4]})
+    return render(request, 'home.html', {'five_latest_products_зфк_1': five_latest_products[:2],
+                                         'five_latest_products_зфк_2': five_latest_products[2:5]})
 
 
 def contacts(request):
