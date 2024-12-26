@@ -1,11 +1,9 @@
 from django.db import models
 
-# Create your models here.
 
 class Category(models.Model):
     name_c = models.CharField(max_length=150, verbose_name='Наименование', unique=True)
     description_c = models.TextField(null=True, blank=True, verbose_name='Описание')
-
 
     def __str__(self):
         return f'\n\nНаименование категории товаров: {self.name_c}\nОписание категории товаров: {self.description_c}'
@@ -14,6 +12,7 @@ class Category(models.Model):
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
         ordering = ['name_c']
+
 
 class Product(models.Model):
     name_p = models.CharField(max_length=150, verbose_name='Наименование', unique=True)
@@ -33,12 +32,12 @@ class Product(models.Model):
         verbose_name_plural = 'Продукты'
         ordering = ['updated_at', 'name_p']
 
+
 class Contact(models.Model):
     legal_address = models.TextField(null=True, blank=True, verbose_name='Юридический адрес')
     mailing_address = models.TextField(null=True, blank=True, verbose_name='Почтовый адрес')
     email = models.EmailField(unique=True, verbose_name='E-mail')
     tel = models.CharField(max_length=50, verbose_name='Телефон')
-
 
     def __str__(self):
         return (f'\n\nЮридический адрес: {self.legal_address}\nПочтовый адрес: {self.mailing_address}'
@@ -47,4 +46,3 @@ class Contact(models.Model):
     class Meta:
         verbose_name = 'Контакт'
         verbose_name_plural = 'Контакты'
-
