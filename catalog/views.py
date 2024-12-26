@@ -3,7 +3,6 @@ from django.http import HttpResponse
 from catalog.models import Product, Contact
 
 
-
 def home(request):
     five_latest_products = Product.objects.all()[:5]
     print(*five_latest_products)
@@ -30,4 +29,4 @@ def contacts(request):
 def product_detail(request, product_id):
     product = Product.objects.get(id=product_id)
     context = {'product': product}
-    return render(request, 'product_detail.html', context)
+    return render(request, 'product.html', context)
