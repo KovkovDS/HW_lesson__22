@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Skystore</title>
+    <title>KODI Store</title>
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
     
 </head>
@@ -27,14 +27,15 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-6" style="padding: 70px;">
+        {% for product in five_latest_products_зфк_1 %}
+        <div class="col-6" style="padding: 70px; padding-bottom: 0px;">
           <div class="card text-bg-light">
-            <h4 class="card-header p-3 text-center">{{product_1.name_p}}</h4>
-            <div class="card-body">
-              <h1 class="text-center">{{product_1.price_by}}</h1>
-              <div class="mb-3">
+            <h4 class="card-header p-3 text-center">{{product.name_p}}</h4>
+            <div class="card-body" style="min-height: 166px">
+              <h1 class="text-center">{{product.price_by}}</h1>
+              <div class="mb-3" style="min-height: 24px">
                 <p class="card-text text-center">
-                  {{product_1.description_p}}
+                  {{product.description_p|truncatechars:50}}
                 </p>
               </div>
               <div class="d-grid gap-2">
@@ -43,32 +44,18 @@
             </div>
           </div>
         </div>
-        <div class="col-6" style="padding: 70px;">
-          <div class="card text-bg-light">
-            <h4 class="card-header p-3 text-center">{{product_2.name_p}}</h4>
-            <div class="card-body">
-              <h1 class="text-center">{{product_2.price_by}}</h1>
-              <div class="mb-3">
-                <p class="card-text text-center">
-                  {{product_2.description_p}}
-                </p>
-              </div>
-              <div class="d-grid gap-2">
-                <button type="button" class="btn btn-outline-primary" disabled>Купить</button>
-              </div>
-            </div>
-          </div>
-        </div>
+        {% endfor %}
     </div>
     <div class="row">
-        <div class="col-4" style="padding: 70px; padding-bottom: 0px">
+        {% for product in five_latest_products_зфк_2 %}
+        <div class="col-4" style="padding: 40px; padding-bottom: 0px">
           <div class="card text-bg-light">
-             <h4 class="card-header p-3 text-center">{{product_3.name_p}}</h4>
+             <h4 class="card-header p-3 text-center">{{product.name_p}}</h4>
             <div class="card-body">
-              <h1 class="text-center">{{product_3.price_by}}</h1>
+              <h1 class="text-center">{{product.price_by}}</h1>
               <div class="mb-3">
                 <p class="card-text text-center">
-                  {{product_3.description_p}}
+                  {{product.description_p|truncatechars:35}}
                 </p>
               </div>
               <div class="d-grid gap-2">
@@ -77,40 +64,8 @@
             </div>
           </div>
         </div>
-        <div class="col-4" style="padding: 70px; padding-bottom: 0px">
-          <div class="card text-bg-light">
-             <h4 class="card-header p-3 text-center">{{product_4.name_p}}</h4>
-            <div class="card-body">
-              <h1 class="text-center">{{product_4.price_by}}</h1>
-              <div class="mb-3">
-                <p class="card-text text-center">
-                  {{product_4.description_p}}
-                </p>
-              </div>
-              <div class="d-grid gap-2">
-                <button type="button" class="btn btn-outline-primary" disabled>Купить</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-4" style="padding: 70px; padding-bottom: 0px">
-          <div class="card text-bg-light">
-             <h4 class="card-header p-3 text-center">{{product_5.name_p}}</h4>
-            <div class="card-body">
-              <h1 class="text-center">{{product_5.price_by}}</h1>
-              <div class="mb-3">
-                <p class="card-text text-center">
-                  {{product_5.description_p}}
-                </p>
-              </div>
-              <div class="d-grid gap-2">
-                <button type="button" class="btn btn-outline-primary" disabled>Купить</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
+        {% endfor %}
+    </div>
 
     <footer class="pt-4 my-md-5 pt-md-5 border-top">
         <div class="row">
