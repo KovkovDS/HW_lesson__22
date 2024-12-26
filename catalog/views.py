@@ -1,13 +1,18 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from catalog.models import Product, Contact
+from django.core.paginator import Paginator
+import psycopg2
 
 
 def home(request):
-    five_latest_products = Product.objects.all()[:5]
-    print(*five_latest_products)
-    return render(request, 'home.html', {'five_latest_products_зфк_1': five_latest_products[:2],
-                                         'five_latest_products_зфк_2': five_latest_products[2:5]})
+    products = Product.objects.all()
+    paginator = Paginator(products, 4)
+    page_number = request.GET.get('page')
+    products_list = paginator.get_page(page_number)
+    print(*products[:5])
+    print(len(products))
+    return render(request, 'home.html', {'products': products_list})
 
 
 def contacts(request):
@@ -27,6 +32,18 @@ def contacts(request):
 
 
 def product_detail(request, product_id):
-    product = Product.objects.get(id=product_id)
+    product = get_object_or_404(Product, id=product_id)
     context = {'product': product}
     return render(request, 'product.html', context)
+
+
+def adding_product(request):
+    if request.method == 'POST':
+        name_p = request.POST.get('name_p')
+        price_by = request.POST.get('price_by')
+        description_p =request.POST.get('description_p')
+        picture = request.POST.get('picture')
+        new_product = Product.objects.create(name_p=name_p, price_by=price_by, description_p=description_p,
+                                             picture=picture)
+        return HttpResponse(f'Товар {name_p} добавлен.'), render(request, 'home.html')
+    return render(request, 'adding_product.html')
