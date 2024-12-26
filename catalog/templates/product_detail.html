@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Информация о продукте{% endblock %}
+
+{% block content %}
+{% include 'header.html' %}
+<ul class="list-group mp-4">
+    <h2>{{ product.name_p }}</h2>
+    <li class="list-group-item d-flex justify-content-between align-items-center">Фото товара: {{ product.picture }}</li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">Цена: {{ product.price_by }}</li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">Категория: {{ product.category.name_c}}</li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">Описание: {{ product.description_p }}</li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">Дата добавления {{ product.create_at }}</li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">Дата последнего изменения: {{ product.updated_at }}</li>
+</ul>
+{% endblock %}
