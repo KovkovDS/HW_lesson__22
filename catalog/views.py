@@ -51,9 +51,5 @@ def adding_product(request):
         new_product = Product.objects.create(name_p=name_p, price_by=price_by, description_p=description_p,
                                              picture=picture, category_id=category_id)
         request.method = 'GET'
-        # added_product(request, name_p)
-        # render(request, 'added_product.html', {'name_p': name_p})
-        # time.sleep(1)
-        # return HttpResponseRedirect('/')
         return added_product(request, name_p)
     return render(request, 'adding_product.html')
