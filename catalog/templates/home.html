@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load my_tags %}
 {% block title %}Главная{% endblock %}
 
 {% block content %}
@@ -9,28 +9,28 @@
     Попробуйте наше мороженое, Вы не останетесь равнодушными к нашей продукции! :)<br>
 Также у нас в ассортименте есть продукты глубокой заморозки, рыба и морепродукты, и много другое!<br>
 Ждем Вас у нас за покупками! :)</p>
-    <div class="row">
-        {% for product in products %}
-        <div class="col-6" style="padding: 70px; padding-bottom: 0px;">
-
-              <div class="card text-bg-light">
-                <h4 class="card-header p-3 text-center">{{product.name_p}}</h4>
-                <div class="card-body" style="min-height: 166px">
+<div class="row">
+    {% for product in products %}
+    <div class="col-6" style="padding: 70px; padding-bottom: 0px;">
+        <div class="card text-bg-light">
+            <h4 class="card-header p-3 text-center">{{product.name_p}}</h4>
+            <img src="{{ product.picture | media_filter }}" class="card-img-top" alt="..."  style="width:400px; height:400px; margin-left:60px">
+              <div class="card-body" style="min-height: 166px">
                   <h1 class="text-center">{{product.price_by}}</h1>
                   <div class="mb-3" style="min-height: 24px">
                     <p class="card-text text-center">
                       {{product.description_p|truncatechars:50}}
                     </p>
                   </div>
-                    <a class="btn btn-link mb-1" href="{% url 'catalog:product' product.pk %}" role="button">Полное описание товара...>></a>
+                  <a class="btn btn-link mb-1" href="{% url 'catalog:product' product.pk %}" role="button">Полное описание товара...>></a>
                   <div class="d-grid gap-2">
-                    <button type="button" class="btn btn-outline-primary" disabled>Купить</button>
+                      <button type="button" class="btn btn-outline-primary" disabled>Купить</button>
                   </div>
-                </div>
               </div>
-            </div>
-        {% endfor %}
-        <a class="btn btn-outline-primary m-5 text-end" href="{% url 'catalog:adding_product' %}" role="button"
-           style="max-width: 142px;">Добавить товар</a>
+        </div>
     </div>
+    {% endfor %}
+    <a class="btn btn-outline-primary m-5 text-end" href="{% url 'catalog:adding_product' %}" role="button"
+       style="max-width: 142px;">Добавить товар</a>
+</div>
 {% endblock %}
