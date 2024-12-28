@@ -6,7 +6,7 @@ class Category(models.Model):
     description_c = models.TextField(null=True, blank=True, verbose_name='Описание')
 
     def __str__(self):
-        return f'\n\nНаименование категории товаров: {self.name_c}\nОписание категории товаров: {self.description_c}'
+        return f'\n\nНаименование категории товаров: {self.name_c}. \nОписание категории товаров: {self.description_c}.'
 
     class Meta:
         verbose_name = 'Категория'
@@ -17,15 +17,15 @@ class Category(models.Model):
 class Product(models.Model):
     name_p = models.CharField(max_length=150, verbose_name='Наименование', unique=True)
     description_p = models.TextField(null=True, blank=True, verbose_name='Описание')
-    picture = models.ImageField(upload_to='images/', null=True, blank=True, verbose_name='Изображение')
+    picture = models.ImageField(upload_to='catalog/images', null=True, blank=True, verbose_name='Изображение')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='Категория')
     price_by = models.IntegerField(verbose_name='Цена за покупку')
     create_at = models.DateField(auto_now_add=True, verbose_name='Дата создания')
     updated_at = models.DateField(auto_now=True, verbose_name='Дата последнего изменения')
 
     def __str__(self):
-        return (f'\n\nНаименование товара: {self.name_p}\nКатегория товаров: {self.category.name_c}'
-                f'\nЦена: {self.price_by}\nОписание товара: {self.description_p}.')
+        return (f'\n\nНаименование товара: {self.name_p}. \nКатегория товаров: {self.category.name_c}.'
+                f' \nЦена: {self.price_by}. \nОписание товара: {self.description_p}.')
 
     class Meta:
         verbose_name = 'Продукт'
