@@ -16,7 +16,7 @@
             <h4 class="card-header p-3 text-center">{{product.name_p}}</h4>
             <img src="{{ product.picture | media_filter }}" class="card-img-top" alt="..."  style="width:400px; height:400px; margin-left:60px">
               <div class="card-body" style="min-height: 166px">
-                  <h1 class="text-center">{{product.price_by}}</h1>
+                  <h1 class="text-center">{{product.price_by}} руб.</h1>
                   <div class="mb-3" style="min-height: 24px">
                     <p class="card-text text-center">
                       {{product.description_p|truncatechars:50}}
