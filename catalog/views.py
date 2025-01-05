@@ -1,54 +1,41 @@
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
 from catalog.models import Product, Contact
-from django.core.paginator import Paginator
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, TemplateView
+from django.views.generic.edit import CreateView
 
 
-def home(request):
-    products = Product.objects.all()
-    paginator = Paginator(products, 4)
-    page_number = request.GET.get('page')
-    products_list = paginator.get_page(page_number)
-    print(*products[:5])
-    print(len(products))
-    return render(request, 'home.html', {'products': products_list})
+class ProductsListView(ListView):
+    paginate_by = 4
+    model = Product
+    template_name = 'home.html'
+    context_object_name = 'products'
 
 
-def contacts(request):
-    try:
-        contact = Contact.objects.get(id=1)
-        return render(request, 'contacts.html',
-                      {'legal_address': contact.legal_address, 'mailing_address': contact.mailing_address,
-                       'email': contact.email, 'tel': contact.tel})
-    except Contact.DoesNotExist:
-        print('Ни каких контактных данных компании не найдено.')
-    if request.method == 'POST':
-        name = request.POST.get('name')
-        phone = request.POST.get('phone')
-        message = request.POST.get('message')
-        return HttpResponse(f'Спасибо, {name}, Ваше сообщение получено.')
-    return render(request, 'contacts.html')
+class Contacts(ListView):
+    model = Contact
+    template_name = 'contacts.html'
+    context_object_name = 'contacts'
 
 
-def product_detail(request, product_id):
-    product = get_object_or_404(Product, id=product_id)
-    context = {'product': product}
-    return render(request, 'product.html', context)
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'product.html'
+    context_object_name = 'product'
 
 
-def added_product(request, name_p):
-    return render(request, 'added_product.html', {'name_p': name_p})
+class AddedProduct(TemplateView):
+    model = Product
+    template_name = 'added_product.html'
+    context_object_name = 'added_product'
 
 
-def adding_product(request):
-    if request.method == 'POST':
-        name_p = request.POST.get('name_p')
-        price_by = request.POST.get('price_by')
-        description_p =request.POST.get('description_p')
-        picture = request.POST.get('picture')
-        category_id = request.POST.get('category_id')
-        new_product = Product.objects.create(name_p=name_p, price_by=price_by, description_p=description_p,
-                                             picture=picture, category_id=category_id)
-        request.method = 'GET'
-        return added_product(request, name_p)
-    return render(request, 'adding_product.html')
+class ProductCreateView(CreateView):
+    model = Product
+    fields = ['name_p', 'price_by', 'description_p', 'picture', 'category']
+    template_name = 'adding_product.html'
+    success_url = reverse_lazy('catalog:added_product')
+
+    def get_success_url(self, **kwargs):
+        success_url = super().get_success_url()
+        added_product = self.object
+        return "{0}?param={1}".format(success_url, added_product)

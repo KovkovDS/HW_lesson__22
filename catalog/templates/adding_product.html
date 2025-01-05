@@ -10,28 +10,9 @@
             <h4 class="my-0 font-weight-normal">Добавить продукт</h4>
         </div>
         <div class="card-body">
-            <form method="post" action="" class="form-floating">
+            <form method="post" action="" class="form-floating" enctype="multipart/form-data">
                 {% csrf_token %}
-                <div class="mb-3">
-                    <label for="name_p">Название товара</label>
-                    <input type="text" name="name_p" class="form-control" id="name_p" required>
-                </div>
-                <div class="mb-3">
-                    <label for="price_by">Цена товара</label>
-                    <input type="text" name="price_by" class="form-control" id="price_by" required>
-                </div>
-                <div class="mb-3">
-                    <label for="description_p">Описание товара</label>
-                    <input type="text" name="description_p" class="form-control" id="description_p">
-                </div>
-                <div class="mb-3">
-                    <label for="picture">Фото товара</label>
-                    <input type="file" name="picture" class="form-control" id="picture" required>
-                </div>
-                <div class="mb-3">
-                    <label for="category_id">Категория товаров</label>
-                    <input type="text" name="category_id" class="form-control" id="category_id" required>
-                </div>
+                {{ form.as_p }}
                 <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Добавить товар</button>
             </form>
         </div>

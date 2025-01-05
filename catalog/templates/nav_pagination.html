@@ -1,22 +1,22 @@
 <nav class="list-pages">
     <ul>
-        {% if products.has_previous %}
+        {% if page_obj.has_previous %}
         <li class="page-num">
-            <a href="?page={{ products.previous_page_number }}">&lt;</a>
+            <a href="?page={{ page_obj.previous_page_number }}">&lt;</a>
         </li>
         {% endif %}
         {% for p in paginator.page_range %}
-                   {% if products.number == p %}
+                   {% if page_obj.number == p %}
         <li class="page-num page-num-selected">{{ p }}</li>
-                   {% elif p >= products.number|add:-2 and p <= products.number|add:2  %}
+                   {% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2  %}
         <li class="page-num">
             <a href="?page={{ p }}">{{ p }}</a>
         </li>
                    {% endif %}
         {% endfor %}
-        {% if products.has_next %}
+        {% if page_obj.has_next %}
         <li class="page-num">
-            <a href="?page={{ products.next_page_number }}">&gt;</a>
+            <a href="?page={{ page_obj.next_page_number }}">&gt;</a>
         </li>
         {% endif %}
     </ul>

@@ -8,25 +8,26 @@
     <div class="col-lg-9 col-md-6 col-sm-12">
         <div class="card mb-4 box-shadow">
             <div class="card-body">
+                {% for contact in contacts %}
                 <table class="table table-striped">
                     <tr>
                         <td class="w-25">Юридический адрес</td>
-                        <td>{{legal_address}}</td>
+                        <td>{{ contact.legal_address }}</td>
                     </tr>
                     <tr>
                         <td class="w-25">Почтовый адрес</td>
-                        <td>{{mailing_address}}</td>
+                        <td>{{ contact.mailing_address }}</td>
                     </tr>
                     <tr>
                         <td class="w-25">E-mail</td>
-                        <td>{{email}}</td>
+                        <td>{{ contact.email }}</td>
                     </tr>
                     <tr>
                         <td class="w-25">Телефон</td>
-                        <td>{{tel}}</td>
+                        <td>{{ contact.tel }}</td>
                     </tr>
-
                 </table>
+                {% endfor %}
             </div>
         </div>
     </div>
