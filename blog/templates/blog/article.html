@@ -1,0 +1,18 @@
+{% extends 'blog/base.html' %}
+{% load blog_tags %}
+{% block title %} {{ article.title }} {% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2 class="card-header p-3 text-center">{{ article.title }}</h2>
+    <img src="{{ article.preview | media_filter }}" class="card-img-top" alt="..." style="width:800px; height:800px; margin-left: 248px">
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">{{article.content}}</li>
+        <li class="list-group-item">Дата добавления: {{article.create_at|date:"d M Y"}}</li>
+        <li class="list-group-item">Просмотров: {{article.number_views}}</li>
+    </ul>
+    <a class="btn btn-outline-secondary m-5 text-start" href="{% url 'blog:home' %}" role="button" style="max-width: 215px;">
+        <<...Вернуться к списку статей</a>
+</div>
+
+{% endblock %}
