@@ -1,0 +1,39 @@
+{% extends 'blog/base.html' %}
+{% load blog_tags %}
+{% block title %}Главная{% endblock %}
+
+{% block content %}
+<p class="lead pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">KODI Blog - это мое видение мира.<br>
+    Я поделюсь своим опытом!:)<br>
+    А Вы сами решите полезно Вам об это знать или нет! :)<br>
+<div class="row">
+    {% for article in articles %}
+    <div class="col-6" style="padding: 70px; padding-bottom: 0px;">
+        <div class="card text-bg-light">
+            <h4 class="card-header p-3 text-center">{{article.title}}</h4>
+            <img src="{{ article.preview | media_filter }}" class="card-img-top" alt="..."  style="width:400px; height:400px; margin-left:60px">
+              <div class="card-body" style="min-height: 166px">
+                  <p class="card-text text-center">
+                      {{article.content|truncatechars:100}}
+                  </p>
+                  <div class="mb-3" style="min-height: 24px">
+                    <p class="card-text text-center">
+                      {{article.create_at}}
+                    </p>
+                  </div>
+                  <a class="btn btn-link mb-1" href="{% url 'blog:article' article.pk %}" role="button">Подробнее...>></a>
+                  <div class="d-grid gap-2">
+                      <p class="card-text text-center">
+                      {{article.number_views}}
+                    </p>
+                  </div>
+              </div>
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+<div class="row">
+    <a class="btn btn-outline-secondary m-5 text-center" href="{% url 'blog:adding_article' %}" role="button"
+       style="max-width: 142px;">Добавить</a>
+</div>
+{% endblock %}
