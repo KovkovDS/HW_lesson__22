@@ -1,0 +1,6 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<script>setTimeout(function() {window.location.href = '/blog/'}, 5000);</script>
+<h2 class="my-0 font-weight-normal">Статья "{{added_article.title}}" успешно добавлена!</h2>
+{% endblock %}
