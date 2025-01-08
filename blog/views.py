@@ -2,6 +2,11 @@ from blog.models import BlogArticle
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, TemplateView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.core.mail import send_mail
+from django.conf import settings
+
+
+# send_mail('Тема', 'Тело письма', settings.EMAIL_HOST_USER, ['to@example.com'])
 
 
 class BlogArticlesListView(ListView):
@@ -24,6 +29,10 @@ class BlogArticleDetailView(DetailView):
         self.object = super().get_object(**kwargs)
         self.object.number_views += 1
         self.object.save()
+        if self.object.number_views  >= 100:
+            send_mail('У статьи более 100 просмотров',
+                      f'У статьи {self.object.title} более 100 просмотров, поздравляю! :)',
+                      settings.EMAIL_HOST_USER, [settings.EMAIL_HOST_USER])
         return self.object
 
 
