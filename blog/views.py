@@ -46,11 +46,9 @@ class BlogArticleCreateView(CreateView):
     model = BlogArticle
     fields = ['title', 'content', 'preview', 'published']
     template_name = 'blog/adding_article.html'
-    success_url = reverse_lazy('blog:added_article')
 
     def get_success_url(self, **kwargs):
-        success_url = super().get_success_url()
-        return "{0}?param={1}".format(success_url, self.kwargs.get('pk'))
+        return reverse('blog:added_article', args=[self.kwargs.get('pk')])
 
 
 class BlogArticleUpdateView(UpdateView):
