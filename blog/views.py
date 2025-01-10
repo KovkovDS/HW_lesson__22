@@ -48,7 +48,7 @@ class BlogArticleCreateView(CreateView):
     template_name = 'blog/adding_article.html'
 
     def get_success_url(self, **kwargs):
-        return reverse('blog:added_article', args=[self.kwargs.get('pk')])
+        return reverse('blog:added_article', args=[self.object.id], kwargs=self.kwargs)
 
 
 class BlogArticleUpdateView(UpdateView):
