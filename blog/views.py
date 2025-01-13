@@ -1,12 +1,11 @@
+from django.shortcuts import render
+
 from blog.models import BlogArticle
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse_lazy, reverse, get_urlconf
 from django.views.generic import ListView, DetailView, TemplateView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.mail import send_mail
 from django.conf import settings
-
-
-# send_mail('Тема', 'Тело письма', settings.EMAIL_HOST_USER, ['to@example.com'])
 
 
 class BlogArticlesListView(ListView):
@@ -40,6 +39,12 @@ class AddedBlogArticle(TemplateView):
     model = BlogArticle
     template_name = 'blog/added_article.html'
     context_object_name = 'added_article'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        added_article = BlogArticle.objects.get(pk=kwargs['pk'])
+        context['added_article'] = added_article
+        return context
 
 
 class BlogArticleCreateView(CreateView):
