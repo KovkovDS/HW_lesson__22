@@ -30,6 +30,12 @@ class ProductForm(forms.ModelForm):
                                       'Ознакомьтесь с данным списком и введите описание товара, не использую слова из него.')
         return description_p
 
+    def clean_price_by(self):
+        price_by = self.cleaned_data.get('price_by')
+
+        if price_by <= 0:
+            raise ValidationError('Цена товара не может быть отрицательной или равняться 0. Укажите корректную цену товара.')
+        return price_by
 
 class ContactForm(forms.ModelForm):
     class Meta:
