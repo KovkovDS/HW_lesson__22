@@ -1,4 +1,6 @@
+from django.core.validators import FileExtensionValidator
 from django.db import models
+from catalog.validators import validate_image_size
 
 
 class Category(models.Model):
@@ -19,7 +21,13 @@ class Category(models.Model):
 class Product(models.Model):
     name_p = models.CharField(max_length=150, verbose_name='Наименование', unique=True)
     description_p = models.TextField(null=True, blank=True, verbose_name='Описание')
-    picture = models.ImageField(upload_to='catalog/images', null=True, blank=True, verbose_name='Изображение')
+    picture = (models.ImageField
+               (upload_to='catalog/images', null=True, blank=True, verbose_name='Изображение',
+                validators=[validate_image_size,
+                            FileExtensionValidator(['jpg', 'png'],
+                                                   'Расширение файла « %(extension)s » не допускается. '
+                                                   'Разрешенные расширения: %(allowed_extensions)s .',
+                                                                   'Недопустимое расширение!')]))
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Категория')
     price_by = models.IntegerField(verbose_name='Цена за покупку')
     hit_sales = models.BooleanField(default=False, verbose_name='Хит продаж!')
