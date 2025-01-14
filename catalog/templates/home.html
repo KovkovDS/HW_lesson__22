@@ -22,7 +22,16 @@
                       {{product.description_p|truncatechars:50}}
                     </p>
                   </div>
-                  <a class="btn btn-link mb-1" href="{% url 'catalog:product' product.pk %}" role="button">Полное описание товара...>></a>
+                  <div class="row">
+                      <div class="col-9">
+                          <a class="btn btn-link mb-1" href="{% url 'catalog:product' product.pk %}" role="button">Полное описание товара...>></a>
+                      </div>
+                      <div class="col-3">
+                          {% if product.hit_sales %}
+                          <div class="text-bg-success">Хит продаж!!!</div>
+                          {% endif %}
+                      </div>
+                  </div>
                   <div class="d-grid gap-2">
                       <button type="button" class="btn btn-outline-primary" disabled>Купить</button>
                   </div>

@@ -7,6 +7,9 @@
     <h2 class="card-header p-3 text-center">{{ object.name_p }}</h2>
     <img src="{{ product.picture | media_filter }}" class="card-img-top" alt="..." style="width:800px; height:800px; margin-left: 248px">
     <ul class="list-group list-group-flush">
+        {% if product.hit_sales %}
+        <li class="list-group-item text-bg-success">Хит продаж!</li>
+        {% endif %}
         <li class="list-group-item">Цена: {{object.price_by}} руб.</li>
         <li class="list-group-item">Категория: {{object.category.name_c}}</li>
         <li class="list-group-item">Описание: {{object.description_p}}</li>
