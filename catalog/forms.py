@@ -13,21 +13,21 @@ class ProductForm(forms.ModelForm):
 
     def clean_name_p(self, **kwargs ):
         name_p = self.cleaned_data.get('name_p')
-        # cleaned_product = Product.objects.get(pk=kwargs['pk'])
+        cleaned_product_pk = self.instance.pk
 
-        for word in name_p.split():
-            if word.lower()  in settings.FORBIDDEN_WORDS:
+        for forbidden_word in settings.FORBIDDEN_WORDS:
+            if forbidden_word.lower() in name_p.lower():
                 raise ValidationError('Вы использовали какие-то слова из списка запрещенных слов. '
                                       'Ознакомьтесь с данным списком и введите название товара, не использую слова из него.')
-        # if Product.objects.filter(name_p=name_p, pk=cleaned_product.pk).exists():
-        #     raise ValidationError('Товар с таким названием уже существует.')
+        if Product.objects.filter(name_p=name_p).exclude(id=cleaned_product_pk).exists():
+            raise ValidationError('Товар с таким названием уже существует.')
         return name_p
 
     def clean_description_p(self):
         description_p = self.cleaned_data.get('description_p')
 
-        for word in description_p.split():
-            if word.lower()  in settings.FORBIDDEN_WORDS:
+        for forbidden_word in settings.FORBIDDEN_WORDS:
+            if forbidden_word.lower() in description_p.lower():
                 raise ValidationError('Вы использовали какие-то слова из списка запрещенных слов. '
                                       'Ознакомьтесь с данным списком и введите описание товара, не использую слова из него.')
         return description_p
