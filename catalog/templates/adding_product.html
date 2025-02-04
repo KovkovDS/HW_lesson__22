@@ -1,18 +1,24 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto">
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
     <h1 class="display-4">{% block title %}Добавление товара{% endblock %}</h1>
 </div>
-<div class="col-lg-3 col-md-6 col-sm-12">
+<div class="col-lg-12 col-md-6 col-sm-12">
     <div class="card mb-4 box-shadow">
-        <div class="card-header">
-            <h4 class="my-0 font-weight-normal">Добавить продукт</h4>
+        <div class="card-header text-center">
+            <h4 class="my-0 font-weight-normal">Добавить товар</h4>
         </div>
         <div class="card-body">
             <form method="post" action="" class="form-floating" enctype="multipart/form-data">
                 {% csrf_token %}
-                {{ form.as_p }}
+                {{ form.non_field_errors }}
+                {% for field in form %}
+                <p>
+                    {{field.label_tag}}
+                    {{field}}
+                    <div class="list-group-item text-danger mb-3 text-center">{{field.errors.0}}</div>
+                    {% endfor %}
                 <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Добавить товар</button>
             </form>
         </div>

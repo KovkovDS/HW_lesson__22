@@ -4,15 +4,22 @@
 
 {% block content %}
 <div class="card">
-    <h2 class="card-header p-3 text-center">{{ product.name_p }}</h2>
+    <h2 class="card-header p-3 text-center">{{ object.name_p }}</h2>
     <img src="{{ product.picture | media_filter }}" class="card-img-top" alt="..." style="width:800px; height:800px; margin-left: 248px">
     <ul class="list-group list-group-flush">
-        <li class="list-group-item">Цена: {{product.price_by}} руб.</li>
-        <li class="list-group-item">Категория: {{product.category.name_c}}</li>
-        <li class="list-group-item">Описание: {{product.description_p}}</li>
-        <li class="list-group-item">Дата добавления: {{product.create_at|date:"d M Y"}}</li>
-        <li class="list-group-item">Дата последнего изменения: {{product.updated_at|date:"d M Y"}}</li>
+        {% if product.hit_sales %}
+        <li class="list-group-item text-bg-success">Хит продаж!</li>
+        {% endif %}
+        <li class="list-group-item">Цена: {{object.price_by}} руб.</li>
+        <li class="list-group-item">Категория: {{object.category.name_c}}</li>
+        <li class="list-group-item">Описание: {{object.description_p}}</li>
+        <li class="list-group-item">Дата добавления: {{object.create_at|date:"d M Y"}}</li>
+        <li class="list-group-item">Дата последнего изменения: {{object.updated_at|date:"d M Y"}}</li>
     </ul>
+    <a href="{% url 'catalog:editing_product' object.pk %}" class="btn btn-primary m-2 text-center" role="button" style="max-width: 255px;">
+        Редактировать</a>
+    <a href="{% url 'catalog:deleting_product' object.pk %}" class="btn btn-danger m-2 text-center" role="button" style="max-width: 255px;">
+        Удалить</a>
     <a class="btn btn-outline-primary m-5 text-start" href="{% url 'catalog:home' %}" role="button" style="max-width: 215px;">
         <<...Вернуться к каталогу</a>
 </div>
