@@ -49,24 +49,24 @@ class UserLoginView(LoginView):
     form_class = CustomUserLoginForm
     success_url = reverse_lazy('catalog:home')
 
-    def get_success_url(self, **kwargs):
-        next_url = self.request.GET.get('next', '/')
-        if '/profile/email-confirm/' in next_url:
-            return redirect(reverse('catalog:home'))
-        if self.request.method == 'POST':
-            form = AuthenticationForm(data=self.request.POST)
-            if form.is_valid():
-                user = form.get_user()
-                login(self.request, user)
-                next_url = self.request.POST.get('next', next_url)
-                parsed_url = urlparse(next_url)
-                if not parsed_url.netloc and is_valid_path(next_url):
-                    return next_url
-                return HttpResponseRedirect('/')
-        else:
-            form = AuthenticationForm()
-
-        return render(self.request, 'login.html', {'form': form, 'next': next_url})
+    # def get_success_url(self, **kwargs):
+    #     next_url = self.request.GET.get('next', '/')
+    #     if '/profile/email-confirm/' in next_url:
+    #         return redirect(reverse('catalog:home'))
+    #     if self.request.method == 'POST':
+    #         form = AuthenticationForm(data=self.request.POST)
+    #         if form.is_valid():
+    #             user = form.get_user()
+    #             login(self.request, user)
+    #             next_url = self.request.POST.get('next', next_url)
+    #             parsed_url = urlparse(next_url)
+    #             if not parsed_url.netloc and is_valid_path(next_url):
+    #                 return next_url
+    #             return HttpResponseRedirect('/')
+    #     else:
+    #         form = AuthenticationForm()
+    #
+    #     return render(self.request, 'login.html', {'form': form, 'next': next_url})
 
 
 class ProfileView(LoginRequiredMixin, DetailView):
