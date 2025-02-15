@@ -156,3 +156,5 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 FORBIDDEN_WORDS = ['казино', 'криптовалюта', 'крипта', 'биржа', 'дешево', 'бесплатно', 'обман', 'полиция', 'радар']
 
 AUTH_USER_MODEL = 'users.CustomUser'
+
+LOGIN_URL = 'user:login'
