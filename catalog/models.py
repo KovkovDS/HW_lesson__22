@@ -27,7 +27,7 @@ class Product(models.Model):
                             FileExtensionValidator(['jpg', 'png'],
                                                    'Расширение файла « %(extension)s » не допускается. '
                                                    'Разрешенные расширения: %(allowed_extensions)s .',
-                                                                   'Недопустимое расширение!')]))
+                                                   'Недопустимое расширение!')]))
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Категория')
     price_by = models.IntegerField(verbose_name='Цена за покупку')
     hit_sales = models.BooleanField(default=False, verbose_name='Хит продаж!')
@@ -35,7 +35,7 @@ class Product(models.Model):
     updated_at = models.DateField(auto_now=True, verbose_name='Дата последнего изменения')
 
     def __str__(self):
-        return (f'\n\nНаименование товара: {self.name_p}. \nКатегория товаров: {self.category}.'    
+        return (f'\n\nНаименование товара: {self.name_p}. \nКатегория товаров: {self.category}.'
                 f' \nЦена: {self.price_by}. \nОписание товара: {self.description_p}.')
 
     class Meta:

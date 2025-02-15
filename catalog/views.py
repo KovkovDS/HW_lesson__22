@@ -40,7 +40,6 @@ class AddedProduct(TemplateView):
 class ProductCreateView(CreateView):
     model = Product
     form_class = ProductForm
-    # fields = ['name_p', 'price_by', 'description_p', 'picture', 'category']
     template_name = 'adding_product.html'
     success_url = reverse_lazy('catalog:added_product')
 
@@ -51,7 +50,6 @@ class ProductCreateView(CreateView):
 class ProductUpdateView(UpdateView):
     model = Product
     form_class = ProductForm
-    # fields = ['title', 'content', 'preview', 'published']
     template_name = 'editing_product.html'
     success_url = reverse_lazy('catalog:home')
 
