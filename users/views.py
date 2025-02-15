@@ -2,10 +2,12 @@ import secrets
 from urllib.parse import urlparse
 from django.contrib.auth import login
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy, reverse, is_valid_path
-from django.views.generic.edit import FormView
+from django.views.generic import DetailView
+from django.views.generic.edit import FormView, UpdateView
 from django.core.mail import send_mail
 from .models import CustomUser
 from config import settings
@@ -65,6 +67,23 @@ class UserLoginView(LoginView):
             form = AuthenticationForm()
 
         return render(self.request, 'login.html', {'form': form, 'next': next_url})
+
+
+class ProfileView(LoginRequiredMixin, DetailView):
+    model = CustomUser
+    template_name = 'profile.html'
+    context_object_name = 'profile'
+
+    def get_success_url(self, **kwargs):
+        next = self.request.POST.get('next', '/')
+        return next
+
+
+class ProfileUpdateView(LoginRequiredMixin, UpdateView):
+    model = CustomUser
+    form_class = CustomUserCreationForm
+    template_name = 'editing_profile.html'
+    success_url = reverse_lazy('user:profile')
 
 
 def email_verification(request, token):

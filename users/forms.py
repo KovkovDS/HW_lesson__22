@@ -27,17 +27,17 @@ class CustomUserCreationForm(UserCreationForm):
             raise forms.ValidationError('Номер телефона должен состоять только из цифр.')
         return phone_number
 
-    def clean(self):
-        cleaned_data = super().clean()
-        email = cleaned_data.get('email')
-        first_name = cleaned_data.get('first_name')
-        last_name = cleaned_data.get('last_name')
-
-        for forbidden_word in settings.FORBIDDEN_WORDS:
-            if forbidden_word.lower() in email.lower() or first_name.lower() or last_name.lower():
-                raise ValidationError('Вы использовали какие-то слова из списка запрещенных слов. '
-                                      'Ознакомьтесь с данным списком и введите описание товара, не использую слова из '
-                                      'него.')
+    # def clean(self):
+    #     cleaned_data = super().clean()
+    #     email = cleaned_data.get('email')
+    #     first_name = cleaned_data.get('first_name')
+    #     last_name = cleaned_data.get('last_name')
+    #
+    #     for forbidden_word in settings.FORBIDDEN_WORDS:
+    #         if forbidden_word.lower() in email.lower() or first_name.lower() or last_name.lower():
+    #             raise ValidationError('Вы использовали какие-то слова из списка запрещенных слов. '
+    #                                   'Ознакомьтесь с данным списком и введите описание товара, не использую слова из '
+    #                                   'него.')
 
     def __init__(self, *args, **kwargs):
         super(CustomUserCreationForm, self).__init__(*args, **kwargs)

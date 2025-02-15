@@ -8,7 +8,7 @@
         <div class="card-header text-center">
             <h4 class="my-0 font-weight-normal">Авторизация</h4>
         </div>
-        <div class="card-body mb-4 m-lg-5">
+        <div class="card-body mb-4 m-lg-3">
             <form method="post" action="" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ form.non_field_errors }}
@@ -19,10 +19,18 @@
                 <div class="list-group-item text-danger mb-3 text-center">{{field.errors.0}}</div>
                 {% endfor %}
                 <input name="next" type="hidden" value="{{ next }}"/>
-                <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Войти</button>
+                <div class="d-grid gap-2 col-9 mx-auto mt-4">
+                    <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Войти</button>
+                </div>
+                    <p class="mt-5">Еще не зарегистрировались?</p>
+                <div class="d-grid gap-2 col-9 mx-auto mt-1">
+                    <a class="p-2 btn btn-outline-primary" href="{% url 'user:register' %}">Регистрация</a>
+                </div>
             </form>
         </div>
     </div>
 </div>
-<a class="btn btn-outline-primary m-5" href="{% url 'catalog:home' %}" role="button"><<...Не авторизовываться</a>
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <a class="btn btn-outline-primary mt-4" href="{% url 'catalog:home' %}" role="button"><<...Не авторизовываться</a>
+</div>
 {% endblock %}

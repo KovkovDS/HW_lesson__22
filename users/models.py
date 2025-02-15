@@ -39,6 +39,8 @@ class CustomUser(AbstractUser):
     country = CountryField(max_length=150, blank=True, blank_label="(Выберите страну)", verbose_name='Страна')
     username = None
     token = models.CharField(max_length=150, blank=True, null=True, verbose_name='Токен для верификации')
+    create_at = models.DateField(auto_now_add=True, verbose_name='Дата создания')
+    updated_at = models.DateField(auto_now=True, verbose_name='Дата последнего изменения')
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
