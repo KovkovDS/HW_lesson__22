@@ -19,11 +19,12 @@
                 {{field}}
                 <div class="list-group-item text-danger mb-3 text-center">{{field.errors.0}}</div>
                 {% endfor %}
-                <input name="next" type="hidden" value="{{ next }}"/>
                 <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Зарегистрироваться</button>
             </form>
         </div>
     </div>
 </div>
-<a class="btn btn-outline-primary m-5" href="{% url 'catalog:home' %}" role="button"><<...Не регистрироваться</a>
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <a class="btn btn-outline-primary mt-4" href="{% url 'catalog:home' %}" role="button"><<...Не регистрироваться</a>
+</div>
 {% endblock %}
