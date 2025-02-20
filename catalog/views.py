@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from catalog.models import Product, Contact
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, TemplateView
@@ -12,20 +13,20 @@ class ProductsListView(ListView):
     context_object_name = 'products'
 
 
-class Contacts(ListView):
+class Contacts(LoginRequiredMixin, ListView):
     model = Contact
     form_class = ContactForm
     template_name = 'contacts.html'
     context_object_name = 'contacts'
 
 
-class ProductDetailView(DetailView):
+class ProductDetailView(LoginRequiredMixin, DetailView):
     model = Product
     template_name = 'product.html'
     context_object_name = 'product'
 
 
-class AddedProduct(TemplateView):
+class AddedProduct(LoginRequiredMixin, TemplateView):
     model = Product
     template_name = 'added_product.html'
     context_object_name = 'added_product'
@@ -37,10 +38,9 @@ class AddedProduct(TemplateView):
         return context
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
-    # fields = ['name_p', 'price_by', 'description_p', 'picture', 'category']
     template_name = 'adding_product.html'
     success_url = reverse_lazy('catalog:added_product')
 
@@ -48,10 +48,9 @@ class ProductCreateView(CreateView):
         return reverse('catalog:added_product', args=[self.object.id], kwargs=self.kwargs)
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
-    # fields = ['title', 'content', 'preview', 'published']
     template_name = 'editing_product.html'
     success_url = reverse_lazy('catalog:home')
 
@@ -59,7 +58,7 @@ class ProductUpdateView(UpdateView):
         return reverse('catalog:product', args=[self.kwargs.get('pk')])
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
     template_name = 'products_confirm_delete.html'
     success_url = reverse_lazy('catalog:home')

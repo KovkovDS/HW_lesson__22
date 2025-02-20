@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">{% block title %}Авторизуйтесь на сайте{% endblock %}</h1>
+</div>
+<div class="col-12 d-flex justify-content-center">
+    <div class="card mb-4 box-shadow">
+        <div class="card-header text-center">
+            <h4 class="my-0 font-weight-normal">Авторизация</h4>
+        </div>
+        <div class="card-body mb-4 m-lg-3">
+            <form method="post" action="" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                {% for field in form %}
+                <p class="mb-1">
+                <label class="mb-1">{{field.label_tag}}</label>
+                    <p class="mb-3">{{field}}</p>
+                <div class="list-group-item text-danger mb-3 text-center">{{field.errors.0}}</div>
+                {% endfor %}
+{#                <input name="next" type="hidden" value="{{ next }}"/>#}
+                <div class="d-grid gap-2 col-9 mx-auto mt-4">
+                    <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Войти</button>
+                </div>
+                    <p class="mt-5">Еще не зарегистрировались?</p>
+                <div class="d-grid gap-2 col-9 mx-auto mt-1">
+                    <a class="p-2 btn btn-outline-primary" href="{% url 'user:register' %}">Регистрация</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <a class="btn btn-outline-primary mt-4" href="{% url 'catalog:home' %}" role="button"><<...Не авторизовываться</a>
+</div>
+{% endblock %}

@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load my_tags %}
+{% load product_tags %}
 {% block title %}Главная{% endblock %}
 
 {% block content %}
@@ -11,13 +11,13 @@
 Ждем Вас у нас за покупками! :)</p>
 <div class="row">
     {% for product in products %}
-    <div class="col-6" style="padding: 70px; padding-bottom: 0px;">
+    <div class="col-6" style="padding: 70px 70px 0;">
         <div class="card text-bg-light">
             <h4 class="card-header p-3 text-center">{{product.name_p}}</h4>
-            <img src="{{ product.picture | media_filter }}" class="card-img-top" alt="..."  style="width:400px; height:400px; margin-left:60px">
-              <div class="card-body" style="min-height: 166px">
+            <img src="{{ product.picture | media_filter }}" class="card-img-top" alt="..."  style="width:400px; height:400px; margin-left:14px">
+              <div class="card-body" style="min-height: 232px">
                   <h1 class="text-center">{{product.price_by}} руб.</h1>
-                  <div class="mb-3" style="min-height: 24px">
+                  <div class="mb-3" style="min-height: 48px">
                     <p class="card-text text-center">
                       {{product.description_p|truncatechars:50}}
                     </p>
@@ -40,8 +40,7 @@
     </div>
     {% endfor %}
     </div>
-<div class="row">
-    <a class="btn btn-outline-primary m-5 text-end" href="{% url 'catalog:adding_product' %}" role="button"
-       style="max-width: 142px;">Добавить товар</a>
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <a class="btn btn-outline-primary mt-4" href="{% url 'catalog:adding_product' %}" role="button">Добавить товар</a>
 </div>
 {% endblock %}
