@@ -51,6 +51,3 @@ class CustomUserCreationForm(UserCreationForm):
                                                          'placeholder': 'Введите ваш номер телефона',
                                                          'label': 'Номер телефона'})
 
-
-class CustomUserLoginForm(AuthenticationForm):
-    password = forms.CharField(label='Пароль', widget=forms.PasswordInput)

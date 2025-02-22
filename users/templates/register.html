@@ -9,7 +9,7 @@
             <h4 class="my-0 font-weight-normal">Регистрация</h4>
         </div>
         <div class="card-body">
-            <form method="post" action="" class="form-floating" enctype="multipart/form-data">
+            <form method="post" class="form-floating" enctype="multipart/form-data">
                 {% include 'help_forbidden_words.html' %}
                 {% csrf_token %}
                 {{ form.non_field_errors }}
@@ -25,6 +25,6 @@
     </div>
 </div>
 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-    <a class="btn btn-outline-primary mt-4" href="{% url 'catalog:home' %}" role="button"><<...Не регистрироваться</a>
+    <a class="btn btn-outline-primary mt-4" href="{% url 'catalog:home' %}?next={{ request.path|urlencode }}" role="button"><<...Не регистрироваться</a>
 </div>
 {% endblock %}
