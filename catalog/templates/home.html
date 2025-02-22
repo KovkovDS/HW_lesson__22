@@ -41,6 +41,6 @@
     {% endfor %}
     </div>
 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-    <a class="btn btn-outline-primary mt-4" href="{% url 'catalog:adding_product' %}" role="button">Добавить товар</a>
+    <a class="btn btn-outline-primary mt-4" href="{% url 'catalog:adding_product' %}?next={{ request.path|urlencode }}" role="button">Добавить товар</a>
 </div>
 {% endblock %}

@@ -25,6 +25,6 @@
     </div>
 </div>
 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-    <a class="btn btn-outline-primary mt-4" href="{% url 'catalog:home' %}" role="button" style="max-width: 215px;"><<...Вернуться к каталогу</a>
+    <a class="btn btn-outline-primary mt-4" href="{{ request.GET.next }}" role="button" style="max-width: 215px;"><<...Вернуться к каталогу</a>
 </div>
 {% endblock %}

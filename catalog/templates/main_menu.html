@@ -14,7 +14,7 @@
             </form>
         {% else %}
             <a class="p-2 btn btn-outline-primary" href="{% url 'user:login' %}?next={{ request.path|urlencode }}">Войти</a>
-            <a class="p-2 btn btn-outline-primary" href="{% url 'user:register' %}">Регистрация</a>
+            <a class="p-2 btn btn-outline-primary" href="{% url 'user:register' %}?next={{ request.path|urlencode }}">Регистрация</a>
         {% endif %}
     </nav>
 </div>
