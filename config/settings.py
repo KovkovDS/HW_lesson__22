@@ -158,5 +158,3 @@ FORBIDDEN_WORDS = ['казино', 'криптовалюта', 'крипта', '
 AUTH_USER_MODEL = 'users.CustomUser'
 
 LOGIN_URL = 'user:login'
-
-# LOGIN_REDIRECT_URL = 'catalog:home'

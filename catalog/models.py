@@ -1,6 +1,7 @@
 from django.core.validators import FileExtensionValidator
 from django.db import models
 from catalog.validators import validate_image_size
+from users.models import CustomUser
 
 
 class Category(models.Model):
@@ -33,6 +34,8 @@ class Product(models.Model):
     hit_sales = models.BooleanField(default=False, verbose_name='Хит продаж!')
     create_at = models.DateField(auto_now_add=True, verbose_name='Дата создания')
     updated_at = models.DateField(auto_now=True, verbose_name='Дата последнего изменения')
+    published = models.BooleanField(default=False, verbose_name='Опубликован')
+    owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True, verbose_name='Владелец')
 
     def __str__(self):
         return (f'\n\nНаименование товара: {self.name_p}. \nКатегория товаров: {self.category}.'
@@ -42,6 +45,9 @@ class Product(models.Model):
         verbose_name = 'Продукт'
         verbose_name_plural = 'Продукты'
         ordering = ['updated_at', 'name_p']
+        permissions = [
+            ("can_unpublish_product", "Снятие продукта с публикации"),
+        ]
 
 
 class Contact(models.Model):

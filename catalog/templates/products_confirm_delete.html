@@ -3,11 +3,11 @@
 {% block title %}Удалить товар{% endblock %}
 
 {% block content %}
-<h2>Удалить статью</h2>
+<h2>Удалить товар</h2>
 <p>Вы уверены, что хотите удалить товар "{{product.title}}"?</p>
 <form method="post">
     {% csrf_token %}
     <button type="submit" class="btn btn-danger">Удалить</button>
-    <a href="{% url 'blog:article' object.pk %}" class="btn btn-primary">Отмена</a>
+    <a href="{% url 'catalog:product' object.pk %}" class="btn btn-primary">Отмена</a>
 </form>
-{% endblock %}
+{% endblock %}`

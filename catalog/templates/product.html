@@ -22,8 +22,17 @@
         </ul>
         <a href="{% url 'catalog:editing_product' object.pk %}" class="btn btn-primary m-2 text-center" role="button" style="max-width: 255px;">
             Редактировать</a>
+        {% if "catalog.can_unpublish_product" in perms %}
+            <form action="{% url 'catalog:published_product' object.pk %}" method="post">
+        {% csrf_token %}
+                <button class="btn btn-danger m-2 text-center" type="submit" style="max-width: 255px;">
+            Опубликовать</button>
+            </form>
+        {% endif %}
+        {% if "catalog.delete_product" in perms %}
         <a href="{% url 'catalog:deleting_product' object.pk %}" class="btn btn-danger m-2 text-center" role="button" style="max-width: 255px;">
             Удалить</a>
+        {% endif %}
     </div>
 </div>
 <div class="d-grid gap-2 d-md-flex justify-content-md-end">

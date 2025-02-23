@@ -1,4 +1,8 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
+from django.shortcuts import get_object_or_404, redirect
+from django.views import View
+
 from catalog.models import Product, Contact
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, TemplateView
@@ -24,6 +28,20 @@ class ProductDetailView(LoginRequiredMixin, DetailView):
     model = Product
     template_name = 'product.html'
     context_object_name = 'product'
+
+
+class ModerationProductView(LoginRequiredMixin, View):
+
+    def post(self, request, pk):
+        product = get_object_or_404(Product, pk=pk)
+
+        if not request.user.has_perm('catalog.can_unpublish_product'):
+            return PermissionDenied("У вас нет прав для публикации Товара.")
+
+        product.published = True
+        product.save()
+
+        return redirect('catalog:product', pk=product.pk)
 
 
 class AddedProduct(LoginRequiredMixin, TemplateView):
@@ -62,3 +80,12 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
     template_name = 'products_confirm_delete.html'
     success_url = reverse_lazy('catalog:home')
+
+    def get_object(self, queryset=None):
+        product_for_delete = super().get_object(queryset)
+        user = self.request.user
+
+        if product_for_delete.owner == user or user.has_perm('catalog.delete_product'):
+            return product_for_delete
+
+        raise PermissionDenied("У вас нет прав для удаления Товара.")
