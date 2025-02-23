@@ -23,10 +23,10 @@
         <a href="{% url 'catalog:editing_product' object.pk %}" class="btn btn-primary m-2 text-center" role="button" style="max-width: 255px;">
             Редактировать</a>
         {% if "catalog.can_unpublish_product" in perms %}
-            <form action="{% url 'catalog:published_product' object.pk %}" method="post">
+            <form action="{% url 'catalog:published_product' object.pk %}" method="post" class="btn btn-danger m-2 text-center" style="max-width: 255px;">
         {% csrf_token %}
-                <button class="btn btn-danger m-2 text-center" type="submit" style="max-width: 255px;">
-            Опубликовать</button>
+                <a role="button" type="submit" style="max-width: 255px;">
+            Опубликовать</a>
             </form>
         {% endif %}
         {% if "catalog.delete_product" in perms %}
