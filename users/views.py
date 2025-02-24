@@ -1,5 +1,6 @@
 import secrets
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import Permission, Group
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import DetailView
@@ -55,6 +56,9 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
 def email_verification(request, token):
     user = get_object_or_404(CustomUser, token=token)
     user.is_active = True
+    # permission = Permission.objects.get(codename=['view_product', 'add_product'])
+    # user.user_permissions.add(permission)
+    user.groups.add(Group.objects.get(name='Зарегистрированный пользователь'))
     user.save()
     subject = f'Добро пожаловать в наш сервис, {user.last_name} {user.first_name}.'
     message = f'Здравствуйте {user.last_name} {user.first_name}! Спасибо, что зарегистрировались в нашем сервисе!'
