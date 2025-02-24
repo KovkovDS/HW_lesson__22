@@ -158,3 +158,5 @@ FORBIDDEN_WORDS = ['казино', 'криптовалюта', 'крипта', '
 AUTH_USER_MODEL = 'users.CustomUser'
 
 LOGIN_URL = 'user:login'
+
+HANDLER403 = 'catalog.views.custom_permission_denied'

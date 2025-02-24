@@ -35,7 +35,7 @@ class Product(models.Model):
     create_at = models.DateField(auto_now_add=True, verbose_name='Дата создания')
     updated_at = models.DateField(auto_now=True, verbose_name='Дата последнего изменения')
     published = models.BooleanField(default=False, verbose_name='Опубликован')
-    owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True, verbose_name='Владелец')
+    owner = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Владелец')
 
     def __str__(self):
         return (f'\n\nНаименование товара: {self.name_p}. \nКатегория товаров: {self.category}.'
