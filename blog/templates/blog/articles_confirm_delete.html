@@ -8,6 +8,9 @@
 <form method="post">
     {% csrf_token %}
     <button type="submit" class="btn btn-danger">Удалить</button>
-    <a href="{% url 'blog:article' object.pk %}" class="btn btn-secondary">Отмена</a>
+    <a href="{% url 'blog:article' object.pk %}?next={{ request.GET.next }}" class="btn btn-secondary">Отмена</a>
 </form>
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <a class="btn btn-outline-secondary m-4" href="{{ request.GET.next }}" role="button"><<...Вернуться к списку статей</a>
+</div>
 {% endblock %}

@@ -21,23 +21,23 @@
             <li class="list-group-item">Дата последнего изменения: {{object.updated_at|date:"d M Y"}}</li>
         </ul>
         {% if product.owner == user %}
-        <a href="{% url 'catalog:editing_product' object.pk %}" class="btn btn-outline-primary m-2 text-center" role="button" style="max-width: 255px;">
+        <a href="{% url 'catalog:editing_product' object.pk %}?next={{ request.GET.next }}" class="btn btn-outline-primary m-2 text-center" role="button" style="max-width: 255px;">
             Редактировать</a>
         {% endif %}
         {% if "catalog.can_unpublish_product" in perms %}
-        <form action="{% url 'catalog:published_product' object.pk %}" method="post">
+        <form action="" method="post">
         {% csrf_token %}
-            <button class="btn btn-outline-success m-2 col-6 text-center" role="button" type="submit" style="max-width: 255px;">
+            <button href="{% url 'catalog:published_product' object.pk %}?next={{ request.GET.next }}" class="btn btn-outline-success m-2 col-6 text-center" role="button" type="submit" style="max-width: 255px;">
             Опубликовать</button>
         </form>
         {% endif %}
         {% if "catalog.delete_product" in perms or product.owner == user%}
-        <a href="{% url 'catalog:deleting_product' object.pk %}" class="btn btn-outline-danger m-2 text-center" role="button" style="max-width: 255px;">
+        <a href="{% url 'catalog:deleting_product' object.pk %}?next={{ request.GET.next }}" class="btn btn-outline-danger m-2 text-center" role="button" style="max-width: 255px;">
             Удалить</a>
         {% endif %}
     </div>
 </div>
 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-    <a class="btn btn-outline-primary mt-4" href="{% url 'catalog:home' %}" role="button" style="max-width: 215px;"><<...Вернуться к каталогу</a>
+    <a class="btn btn-outline-primary mt-4" href="{{ request.GET.next }}" role="button" style="max-width: 215px;"><<...Вернуться к каталогу</a>
 </div>
 {% endblock %}

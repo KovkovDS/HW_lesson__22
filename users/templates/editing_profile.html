@@ -22,12 +22,15 @@
                 <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Сохранить</button>
             </form>
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <a class="btn btn-outline-primary mt-4" href="{% url 'user:profile' user.pk %}" role="button"><<...Не сохранять изменения</a>
+            <a class="btn btn-outline-primary mt-4" href="{% url 'user:profile' user.pk %}?next={{ request.GET.next }}" role="button"><<...Не сохранять изменения</a>
         </div>
         </div>
     </div>
 </div>
 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
     <a class="btn btn-outline-primary mt-4" href="{% url 'catalog:home' %}" role="button"><<...Вернуться к каталогу</a>
+</div>
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <a class="btn btn-outline-primary mt-4" href="{% url 'blog:home' %}" role="button"><<...Вернуться к списку статей</a>
 </div>
 {% endblock %}

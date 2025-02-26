@@ -6,7 +6,7 @@ class BlogArticle(models.Model):
     content = models.TextField(default='Здесь пока ничего нет.', verbose_name='Содержимое')
     preview = models.ImageField(upload_to='blog/images', null=True, blank=True, verbose_name='Превью')
     create_at = models.DateField(auto_now_add=True, verbose_name='Дата создания')
-    published = models.BooleanField(default=True, verbose_name='Опубликована')
+    published = models.BooleanField(default=False, verbose_name='Опубликована')
     number_views = models.IntegerField(default=0, verbose_name='Количество просмотров')
 
     def __str__(self):
@@ -21,3 +21,6 @@ class BlogArticle(models.Model):
         verbose_name = 'Статья'
         verbose_name_plural = 'Статьи'
         ordering = ['create_at']
+        permissions = [
+            ("can_publish_blogarticle", "Публикация статьи блога"),
+        ]

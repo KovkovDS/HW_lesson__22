@@ -24,7 +24,7 @@
                   </div>
                   <div class="row">
                       <div class="col-9">
-                          <a class="btn btn-link mb-1" href="{% url 'catalog:product' product.pk %}" role="button">Полное описание товара...>></a>
+                          <a class="btn btn-link mb-1" href="{% url 'catalog:product' product.pk %}?next={{ request.get_full_path }}" role="button">Полное описание товара...>></a>
                       </div>
                       <div class="col-3">
                           {% if product.hit_sales %}
@@ -41,6 +41,6 @@
     {% endfor %}
     </div>
 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-    <a class="btn btn-outline-primary mt-4" href="{% url 'catalog:adding_product' %}?next={{ request.path|urlencode }}" role="button">Добавить товар</a>
+    <a class="btn btn-outline-primary mt-4" href="{% url 'catalog:adding_product' %}?next={{ request.get_full_path }}" role="button">Добавить товар</a>
 </div>
 {% endblock %}

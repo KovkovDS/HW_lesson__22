@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Страница не найдена{% endblock %}
+
+{% block content %}
+<script>setTimeout(function() {window.location.href = '/catalog/'}, 5000);</script>
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Запрашиваемая страница не найдена или адрес некорректен.<br>
+        Вы будете автоматически перенаправлены на главную страницу.</h1>
+</div>
+<div class="col-lg-12 col-md-6 col-sm-12">
+    <p class="lead pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">{{ message }} Запрашиваемая страница не найдена или адрес некорректен. Вы будете автоматически перенаправлены на главную страницу.</p>
+</div>
+{% endblock %}

@@ -13,6 +13,7 @@ class CustomUserCreationForm(UserCreationForm):
         fields = ('email', 'avatar', 'first_name', 'last_name', 'phone_number', 'country', 'password1', 'password2')
         widgets = {"country": CountrySelectWidget(layout='{widget}<img class="country-select-flag" id="{flag_id}" '
                                                          'style="margin: 3px 4px 6px; width: 2.5%; height: 2.5%" '
+                                                         'class="me-auto flex-shrink-1" '
                                                          'src="{country.flag}">')}
 
     def clean_email(self):
@@ -50,4 +51,18 @@ class CustomUserCreationForm(UserCreationForm):
         self.fields['phone_number'].widget.attrs.update({'class': 'form-control',
                                                          'placeholder': 'Введите ваш номер телефона',
                                                          'label': 'Номер телефона'})
+        self.fields['country'].widget.attrs.update({'class': 'form-select', 'placeholder': 'Выберите страну',
+                                                    'style': 'width: 90%'})
+        self.fields['password1'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Введите пароль'})
+        self.fields['password2'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Введите пароль для '
+                                                                                              'подтверждения'})
 
+
+class CustomUserLoginForm(AuthenticationForm):
+    class Meta(AuthenticationForm):
+        fields = ('email', 'password')
+
+    def __init__(self, *args, **kwargs):
+        super(CustomUserLoginForm, self).__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Введите ваш E-mail'})
+        self.fields['password'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Введите пароль'})

@@ -8,7 +8,7 @@
     А Вы сами решите полезно Вам об это знать или нет! :)<br>
 <div class="row">
     {% for article in articles %}
-    <div class="col-6" style="padding: 70px; padding-bottom: 0px;">
+    <div class="col-6" style="padding: 70px 70px 0;">
         <div class="card text-bg-light">
             <h4 class="card-header p-3 text-center">{{article.title}}</h4>
             <img src="{{ article.preview | media_filter }}" class="card-img-top" alt="..."  style="width:400px; height:400px; margin-left:60px">
@@ -21,7 +21,7 @@
                       {{article.create_at}}
                     </p>
                   </div>
-                  <a class="btn btn-link mb-1" href="{% url 'blog:article' article.pk %}" role="button">Подробнее...>></a>
+                  <a class="btn btn-link mb-1" href="{% url 'blog:article' article.pk %}?next={{ request.get_full_path }}" role="button">Подробнее...>></a>
                   <div class="d-grid gap-2">
                       <p class="card-text text-center">
                       {{article.number_views}}
@@ -33,7 +33,7 @@
     {% endfor %}
     </div>
 <div class="row">
-    <a class="btn btn-outline-secondary m-5 text-center" href="{% url 'blog:adding_article' %}" role="button"
-       style="max-width: 142px;">Добавить</a>
+    <a class="btn btn-outline-secondary m-5 text-center" href="{% url 'blog:adding_article' %}?next={{ request.get_full_path }}" role="button"
+       style="max-width: 142px;">Добавить статью</a>
 </div>
 {% endblock %}

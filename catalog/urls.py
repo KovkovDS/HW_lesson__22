@@ -3,7 +3,6 @@ from catalog.apps import CatalogConfig
 from .views import (ProductsListView, ProductDetailView, ProductCreateView, ProductUpdateView, ProductDeleteView,
                     AddedProduct, Contacts, ModerationProductView)
 
-
 app_name = CatalogConfig.name
 
 urlpatterns = [
@@ -16,3 +15,5 @@ urlpatterns = [
     path('product/<int:pk>/added/', AddedProduct.as_view(), name='added_product'),
     path('product/<int:pk>/published/', ModerationProductView.as_view(), name='published_product'),
 ]
+
+handler404 = "catalog.views.page_not_found_view"

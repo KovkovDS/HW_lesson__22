@@ -19,12 +19,13 @@
                 {{field}}
                 <div class="list-group-item text-danger mb-3 text-center">{{field.errors.0}}</div>
                 {% endfor %}
+                <input type="hidden" name="next" value="{{ request.GET.next }}">
                 <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Зарегистрироваться</button>
             </form>
         </div>
     </div>
 </div>
 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-    <a class="btn btn-outline-primary mt-4" href="{% url 'catalog:home' %}?next={{ request.path|urlencode }}" role="button"><<...Не регистрироваться</a>
+    <a class="btn btn-outline-primary mt-4" href="{{ request.GET.next }}" role="button"><<...Не регистрироваться</a>
 </div>
 {% endblock %}

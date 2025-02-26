@@ -1,7 +1,7 @@
 from django.urls import path
 from blog.apps import BlogConfig
 from .views import (BlogArticlesListView, BlogArticleDetailView, AddedBlogArticle, BlogArticleCreateView,
-                    BlogArticleUpdateView, BlogArticleDeleteView)
+                    BlogArticleUpdateView, BlogArticleDeleteView, PublicationBlogArticleView)
 
 
 app_name = BlogConfig.name
@@ -13,4 +13,7 @@ urlpatterns = [
     path('article/<int:pk>/edit/', BlogArticleUpdateView.as_view(), name='editing_article'),
     path('article/<int:pk>/delete/', BlogArticleDeleteView.as_view(), name='deleting_article'),
     path('article/<int:pk>/added/', AddedBlogArticle.as_view(), name='added_article'),
+    path('article/<int:pk>/published/', PublicationBlogArticleView.as_view(), name='published_article'),
     ]
+
+handler404 = "catalog.views.page_not_found_view"

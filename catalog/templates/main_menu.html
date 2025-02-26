@@ -2,6 +2,7 @@
     <h5 class="my-0 mr-md-auto font-weight-normal">KODI Store</h5>
     <nav class="p-2 flex-grow-1 ms-3">
         <a class="p-2 me-1 btn btn-outline-primary" href="{% url 'catalog:home' %}">Каталог</a>
+        <a class="p-2 btn btn-outline-primary" href="{% url 'blog:home' %}">Блог</a>
         <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:contacts' %}">Контакты</a>
     </nav>
     <nav class="p-2 me-auto">
@@ -10,11 +11,11 @@
                 {% csrf_token %}
                 <button type="submit" class="p-2 btn btn-outline-primary">Выйти
                 </button>
-                 <a class="p-2 btn btn-outline-primary" href="{% url 'user:profile' user.pk %}?next={{ request.path|urlencode }}">Профиль</a>
+                 <a class="p-2 btn btn-outline-primary" href="{% url 'user:profile' user.pk %}?next={{ request.get_full_path }}">Профиль</a>
             </form>
         {% else %}
-            <a class="p-2 btn btn-outline-primary" href="{% url 'user:login' %}?next={{ request.path|urlencode }}">Войти</a>
-            <a class="p-2 btn btn-outline-primary" href="{% url 'user:register' %}?next={{ request.path|urlencode }}">Регистрация</a>
+            <a class="p-2 btn btn-outline-primary" href="{% url 'user:login' %}?next={{ request.get_full_path }}">Войти</a>
+            <a class="p-2 btn btn-outline-primary" href="{% url 'user:register' %}?next={{ request.get_full_path }}">Регистрация</a>
         {% endif %}
     </nav>
 </div>

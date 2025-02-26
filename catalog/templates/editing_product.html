@@ -25,6 +25,9 @@
     </div>
 </div>
 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-    <a class="btn btn-outline-primary mt-4" href="{% url 'catalog:product' object.pk %}" role="button"><<...Не сохранять изменения</a>
+    <a class="btn btn-outline-primary mt-4" href="{% url 'catalog:product' object.pk %}?next={{ request.get_full_path }}" role="button"><<...Не сохранять изменения</a>
+</div>
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <a class="btn btn-outline-primary mt-4" href="{{ request.GET.next }}" role="button" style="max-width: 215px;"><<...Вернуться к каталогу</a>
 </div>
 {% endblock %}

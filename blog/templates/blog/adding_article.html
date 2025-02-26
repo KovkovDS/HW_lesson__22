@@ -12,11 +12,19 @@
         <div class="card-body">
             <form method="post" action="" class="form-floating" enctype="multipart/form-data">
                 {% csrf_token %}
-                {{ form.as_p }}
+                {{ form.non_field_errors }}
+                {% for field in form %}
+                <p>
+                    {{field.label_tag}}
+                    {{field}}
+                    <div class="list-group-item text-danger mb-3 text-center">{{field.errors.0}}</div>
+                    {% endfor %}
                 <button type="submit" class="btn btn-lg btn-block btn-outline-secondary">Добавить</button>
             </form>
         </div>
     </div>
 </div>
-<a class="btn btn-outline-secondary m-5" href="{% url 'blog:home' %}" role="button"><<...Вернуться к списку статей</a>
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <a class="btn btn-outline-secondary m-5" href="{{ request.GET.next }}" role="button"><<...Вернуться к списку статей</a>
+</div>
 {% endblock %}
