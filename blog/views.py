@@ -1,3 +1,8 @@
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.core.exceptions import PermissionDenied
+from django.shortcuts import render, get_object_or_404, redirect
+from django.views import View
+from blog.forms import BlogArticleForm
 from blog.models import BlogArticle
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, TemplateView
@@ -14,10 +19,14 @@ class BlogArticlesListView(ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        return queryset.filter(published=True)
+        user = self.request.user
+        if not user.has_perm('blog.view_blogarticle'):
+            return queryset.filter(published=True)
+        return queryset
 
 
-class BlogArticleDetailView(DetailView):
+class BlogArticleDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
+    permission_required = "blog.view_blogarticle"
     model = BlogArticle
     template_name = 'blog/article.html'
     context_object_name = 'article'
@@ -33,7 +42,8 @@ class BlogArticleDetailView(DetailView):
         return self.object
 
 
-class AddedBlogArticle(TemplateView):
+class AddedBlogArticle(LoginRequiredMixin, PermissionRequiredMixin, TemplateView):
+    permission_required = "blog.add_blogarticle"
     model = BlogArticle
     template_name = 'blog/added_article.html'
     context_object_name = 'added_article'
@@ -45,26 +55,63 @@ class AddedBlogArticle(TemplateView):
         return context
 
 
-class BlogArticleCreateView(CreateView):
+class BlogArticleCreateView(LoginRequiredMixin, CreateView):
     model = BlogArticle
-    fields = ['title', 'content', 'preview', 'published']
+    form_class = BlogArticleForm
     template_name = 'blog/adding_article.html'
+    success_url = reverse_lazy('blog:added_article')
+
+    def get_object(self, queryset=None):
+        article_for_adding = super().get_object(queryset)
+        user = self.request.user
+        if not user.has_perm('blog.add_blogarticle'):
+            raise PermissionDenied(f'У вас нет прав для добавления Статьи "{article_for_adding.title}".')
+        return article_for_adding
 
     def get_success_url(self, **kwargs):
         return reverse('blog:added_article', args=[self.object.id], kwargs=self.kwargs)
 
 
-class BlogArticleUpdateView(UpdateView):
+class PublicationBlogArticleView(LoginRequiredMixin, View):
+
+    def post(self, request, pk):
+        article = get_object_or_404(BlogArticle, pk=pk)
+        if not request.user.has_perm('blog.can_publish_blogarticle'):
+            return PermissionDenied(f'У вас нет прав для публикации Статьи "{article.title}".')
+        article.published = True
+        article.save()
+        return redirect('blog:article', pk=article.pk)
+
+
+class BlogArticleUpdateView(LoginRequiredMixin, UpdateView):
     model = BlogArticle
-    fields = ['title', 'content', 'preview', 'published']
+    form_class = BlogArticleForm
     template_name = 'blog/editing_article.html'
     success_url = reverse_lazy('blog:home')
+
+    def get_object(self, queryset=None):
+        article_for_update = super().get_object(queryset)
+        user = self.request.user
+        if not user.has_perm('blog.change_blogarticle'):
+            raise PermissionDenied(f'У вас нет прав для редактирования Статьи "{article_for_update.title}".')
+        return article_for_update
 
     def get_success_url(self, **kwargs):
         return reverse('blog:article', args=[self.kwargs.get('pk')])
 
 
-class BlogArticleDeleteView(DeleteView):
+class BlogArticleDeleteView(LoginRequiredMixin, DeleteView):
     model = BlogArticle
     template_name = 'blog/articles_confirm_delete.html'
     success_url = reverse_lazy('blog:home')
+
+    def get_object(self, queryset=None):
+        article_for_delete = super().get_object(queryset)
+        user = self.request.user
+        if not user.has_perm('blog.delete_blogarticle'):
+            raise PermissionDenied(f'У вас нет прав для удаления Статьи "{article_for_delete.title}".')
+        return article_for_delete
+
+
+def custom_permission_denied(request, exception):
+    return render(request, 'error_403.html', {'message': str(exception)})

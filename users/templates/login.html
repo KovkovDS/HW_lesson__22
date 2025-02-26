@@ -18,13 +18,13 @@
                     <p class="mb-3">{{field}}</p>
                 <div class="list-group-item text-danger mb-3 text-center">{{field.errors.0}}</div>
                 {% endfor %}
-                <input name="next" type="hidden" value="{{ next }}"/>
+                <input name="next" type="hidden" value="{{ request.GET.next }}"/>
                 <div class="d-grid gap-2 col-9 mx-auto mt-4">
                     <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Войти</button>
                 </div>
                     <p class="mt-5">Еще не зарегистрировались?</p>
                 <div class="d-grid gap-2 col-9 mx-auto mt-1">
-                    <a class="p-2 btn btn-outline-primary" href="{% url 'user:register' %}">Регистрация</a>
+                    <a class="p-2 btn btn-outline-primary" href="{% url 'user:register' %}?next={{ request.GET.next }}">Регистрация</a>
                 </div>
             </form>
         </div>

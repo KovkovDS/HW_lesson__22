@@ -68,7 +68,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -160,3 +160,5 @@ AUTH_USER_MODEL = 'users.CustomUser'
 LOGIN_URL = 'user:login'
 
 HANDLER403 = 'catalog.views.custom_permission_denied'
+
+HANDLER404 = 'catalog.views.page_not_found_view'

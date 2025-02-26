@@ -1,6 +1,7 @@
 import secrets
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.models import Permission, Group
+from django.contrib.auth.models import Group
+from django.contrib.auth.views import LoginView
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import DetailView
@@ -8,7 +9,7 @@ from django.views.generic.edit import FormView, UpdateView
 from django.core.mail import send_mail
 from .models import CustomUser
 from config import settings
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, CustomUserLoginForm
 
 
 class RegisterView(FormView):
@@ -29,7 +30,7 @@ class RegisterView(FormView):
         user.token = token
         user.save()
         host = self.request.get_host()
-        url_for_confirm = f'http://{host}/profile/email-confirm/{token}/'
+        url_for_confirm = f'http://{host}/profile/email-confirm/{token}'
         send_mail(
             subject=f'Добро пожаловать в наш сервис. Подтвердите вашу электронную почту.',
             message=f'Здравствуйте {user.last_name} {user.first_name}! Для активации вашей учетной записи пройдите по '
@@ -38,6 +39,24 @@ class RegisterView(FormView):
             recipient_list=[user.email],
         )
         return super().form_valid(form)
+
+    def get_success_url(self):
+        next = self.request.POST.get('next', '/')
+        # if 'profile/login/' in next:
+        #     return redirect(reverse('catalog:home'))
+        return next
+
+
+class AuthorizationView(LoginView):
+    form_class = CustomUserLoginForm
+    template_name = 'login.html'
+    success_url = reverse_lazy('catalog:home')
+
+    def get_success_url(self):
+        next = self.request.POST.get('next', '/')
+        # if 'profile/login/' in next or '%3F' in next:
+        #     return redirect(reverse('catalog:home'))
+        return next
 
 
 class ProfileView(LoginRequiredMixin, DetailView):
@@ -56,13 +75,11 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
 def email_verification(request, token):
     user = get_object_or_404(CustomUser, token=token)
     user.is_active = True
-    # permission = Permission.objects.get(codename=['view_product', 'add_product'])
-    # user.user_permissions.add(permission)
     user.groups.add(Group.objects.get(name='Зарегистрированный пользователь'))
     user.save()
     subject = f'Добро пожаловать в наш сервис, {user.last_name} {user.first_name}.'
     message = f'Здравствуйте {user.last_name} {user.first_name}! Спасибо, что зарегистрировались в нашем сервисе!'
-    from_email = 'dmitriy.vavtotrans@ya.ru'
+    from_email = settings.EMAIL_HOST_USER
     recipient_list = [user.email]
     send_mail(subject, message, from_email, recipient_list)
-    return redirect(reverse('user:login'))
+    return redirect(reverse('catalog:home'))

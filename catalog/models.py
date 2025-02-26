@@ -46,7 +46,7 @@ class Product(models.Model):
         verbose_name_plural = 'Продукты'
         ordering = ['updated_at', 'name_p']
         permissions = [
-            ("can_unpublish_product", "Снятие продукта с публикации"),
+            ("can_unpublish_product", "Публикация карточки продукта"),
         ]
 
 
