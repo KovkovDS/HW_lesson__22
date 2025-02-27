@@ -8,6 +8,8 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, TemplateView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from catalog.forms import ProductForm, ContactForm
+from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
 
 
 class ProductsListView(ListView):
@@ -24,6 +26,7 @@ class Contacts(LoginRequiredMixin, ListView):
     context_object_name = 'contacts'
 
 
+@method_decorator(cache_page(60 * 15), name='dispatch')
 class ProductDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     permission_required = "catalog.view_product"
     model = Product
