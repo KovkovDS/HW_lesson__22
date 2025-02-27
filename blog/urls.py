@@ -1,5 +1,6 @@
 from django.urls import path
 from blog.apps import BlogConfig
+from catalog.views import custom_permission_denied
 from .views import (BlogArticlesListView, BlogArticleDetailView, AddedBlogArticle, BlogArticleCreateView,
                     BlogArticleUpdateView, BlogArticleDeleteView, PublicationBlogArticleView)
 
@@ -14,6 +15,7 @@ urlpatterns = [
     path('article/<int:pk>/delete/', BlogArticleDeleteView.as_view(), name='deleting_article'),
     path('article/<int:pk>/added/', AddedBlogArticle.as_view(), name='added_article'),
     path('article/<int:pk>/published/', PublicationBlogArticleView.as_view(), name='published_article'),
+    # path('error-403/', custom_permission_denied, name='error-403'),
     ]
 
 handler404 = "catalog.views.page_not_found_view"

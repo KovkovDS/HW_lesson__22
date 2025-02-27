@@ -162,3 +162,10 @@ LOGIN_URL = 'user:login'
 HANDLER403 = 'catalog.views.custom_permission_denied'
 
 HANDLER404 = 'catalog.views.page_not_found_view'
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379/1',
+    }
+}
