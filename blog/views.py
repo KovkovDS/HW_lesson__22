@@ -11,6 +11,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 
 
+
 class BlogArticlesListView(ListView):
     paginate_by = 4
     model = BlogArticle
