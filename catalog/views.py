@@ -29,6 +29,13 @@ class ProductsListView(ListView):
         context['products'] = ListProductsCategories.get_products_categories(category_products)
         return context
 
+    def get_queryset(self):
+        queryset = cache.get('products_queryset')
+        if not queryset:
+            queryset = super().get_queryset()
+            cache.set('products_queryset', queryset, 60 * 15)
+        return queryset
+
 
 class FilterCategoryProductsList(ListView):
     paginate_by = 4
