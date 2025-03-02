@@ -3,13 +3,15 @@ from django.contrib.auth.models import Group
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
-from catalog.models import Product, Contact
+from catalog.models import Product, Contact, Category
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, TemplateView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from catalog.forms import ProductForm, ContactForm
 from django.views.decorators.cache import cache_page
 from django.utils.decorators import method_decorator
+from catalog.services import ListProductsCategories
+from django.core.cache import cache
 
 
 class ProductsListView(ListView):
@@ -17,6 +19,60 @@ class ProductsListView(ListView):
     model = Product
     template_name = 'home.html'
     context_object_name = 'products'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        categories = Category.objects.all()
+        category_products = self.request.GET.get('category_id')
+        print(category_products)
+        context['categories'] = categories
+        context['products'] = ListProductsCategories.get_products_categories(category_products)
+        return context
+
+
+class FilterCategoryProductsList(ListView):
+    paginate_by = 4
+    model = Product
+    template_name = 'home.html'
+    context_object_name = 'products'
+
+    def post(self, request, id):
+        products = ListProductsCategories.get_products_categories(id)
+        return redirect('catalog:home', {'filter': products})
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        categories = Category.objects.all()
+        category_products = self.request.GET.get('category_id')
+        context['categories'] = categories
+        context['products'] = ListProductsCategories.get_products_categories(category_products)
+        return context
+
+
+class FilteredCategoryProducts(UpdateView):
+    # paginate_by = 4
+    model = Category
+    template_name = 'filter_menu.html'
+    context_object_name = 'category'
+    category = None
+
+    # def get_queryset(self):
+    #     if self.category_products is None:
+    #         queryset = Product.objects.all()
+    #     else:
+    #         # self.category = Category.objects.get(id=self.kwargs['id'])
+    #         category_products = self.request.POST.get('value')
+    #         queryset = ListProductsCategories.get_products_categories(category_products)
+    #     return queryset
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     categories = Category.objects.all()
+    #     context['categories'] = categories
+    #     return context
+    #
+    def get_success_url(self, **kwargs):
+        return reverse('catalog:category_products', args=[self.object.id], kwargs=self.kwargs)
 
 
 class Contacts(LoginRequiredMixin, ListView):
@@ -42,7 +98,7 @@ class ModerationProductView(LoginRequiredMixin, View):
             return PermissionDenied(f'У вас нет прав для публикации Товара "{product.name_p}".')
         product.published = True
         product.save()
-        return redirect('catalog:product', pk=product.pk)
+        return redirect('catalog:home')
 
 
 class AddedProduct(LoginRequiredMixin, PermissionRequiredMixin, TemplateView):
@@ -108,7 +164,7 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
 
 
 def custom_permission_denied(request, exception):
-    return render(request, 'error_403.html', {'message': str(exception)})
+    return render(request, 'error_403.html', {'message': str(exception)}, status=403)
 
 
 def page_not_found_view(request, exception):

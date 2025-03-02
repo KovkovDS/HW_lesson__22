@@ -2,7 +2,17 @@
     <h5 class="my-0 mr-md-auto font-weight-normal">KODI Blog</h5>
     <nav class="p-2 flex-grow-1 ms-3">
         <a class="p-2 me-1 btn btn-outline-secondary" href="{% url 'blog:home' %}">Блог</a>
-        <a class="p-2 btn btn-outline-secondary" href="{% url 'catalog:home' %}">Каталог</a>
+        <div class="btn-group ">
+            <a class="btn btn-outline-secondary p-2" href="{% url 'catalog:home' %}">Каталог
+            </a>
+            <button class="btn btn-outline-secondary dropdown-toggle-split dropdown-toggle p-2" data-bs-toggle="dropdown" aria-expanded="false">
+            </button>
+            <ul class="dropdown-menu dropdown-menu-dark">
+            {% for category in categories %}
+                <li><a class="dropdown-item" href="{% url 'catalog:home' %}?category_id={{ category.id }}">{{ category.name_c }}</a></li>
+            {% endfor %}
+            </ul>
+        </div>
         <a class="p-2 btn btn-outline-secondary" href="{% url 'catalog:contacts' %}">Контакты</a>
     </nav>
     <nav class="p-2 me-auto">

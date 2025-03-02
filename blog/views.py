@@ -10,6 +10,8 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.mail import send_mail
 from django.conf import settings
 
+from catalog.models import Category
+from catalog.services import ListProductsCategories
 
 
 class BlogArticlesListView(ListView):
@@ -17,6 +19,14 @@ class BlogArticlesListView(ListView):
     model = BlogArticle
     template_name = 'blog/home.html'
     context_object_name = 'articles'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        categories = Category.objects.all()
+        category_products = self.request.GET.get('category.id')
+        context['categories'] = categories
+        context['products'] = ListProductsCategories.get_products_categories(category_products)
+        return context
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -81,7 +91,7 @@ class PublicationBlogArticleView(LoginRequiredMixin, View):
             return PermissionDenied(f'У вас нет прав для публикации Статьи "{article.title}".')
         article.published = True
         article.save()
-        return redirect('blog:article', pk=article.pk)
+        return redirect('blog:home')
 
 
 class BlogArticleUpdateView(LoginRequiredMixin, UpdateView):
