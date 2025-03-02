@@ -32,7 +32,7 @@
     </div>
     {% endfor %}
     </div>
-<div class="row">
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
     <a class="btn btn-outline-secondary m-5 text-center" href="{% url 'blog:adding_article' %}?next={{ request.get_full_path }}" role="button"
        style="max-width: 142px;">Добавить статью</a>
 </div>

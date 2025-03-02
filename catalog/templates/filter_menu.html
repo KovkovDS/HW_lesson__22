@@ -1,0 +1,18 @@
+<ul class="ms-auto p-2 border-start navbar-nav">
+{#    <h4 class="fw-bold">Фильтры</h4>#}
+    <li class="fw-medium fst-italic">
+    <form method="post" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+        <select class="form-select btn-outline-primary" aria-label="Default select example">
+            <option selected>Выберите категорию товаров</option>
+            {% for category in categories %}
+            <option value="{{ category.id }}">{{ category.name_c }}
+            </option>
+            {% endfor %}
+        </select>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button type="submit" class="btn btn-outline-primary mt-2">Отфильтровать</button>
+        </div>
+    </form>
+    </li>
+</ul>

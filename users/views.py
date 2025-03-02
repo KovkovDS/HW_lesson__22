@@ -42,8 +42,6 @@ class RegisterView(FormView):
 
     def get_success_url(self):
         next = self.request.POST.get('next', '/')
-        # if 'profile/login/' in next:
-        #     return redirect(reverse('catalog:home'))
         return next
 
 
@@ -54,8 +52,6 @@ class AuthorizationView(LoginView):
 
     def get_success_url(self):
         next = self.request.POST.get('next', '/')
-        # if 'profile/login/' in next or '%3F' in next:
-        #     return redirect(reverse('catalog:home'))
         return next
 
 

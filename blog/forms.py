@@ -7,7 +7,7 @@ from django.conf import settings
 class BlogArticleForm(forms.ModelForm):
     class Meta:
         model = BlogArticle
-        fields = ['title', 'content', 'preview', ]
+        fields = ['title', 'content', 'published', 'preview', ]
 
     def clean_title(self):
         title = self.cleaned_data.get('title')
@@ -37,4 +37,5 @@ class BlogArticleForm(forms.ModelForm):
         self.fields['title'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Введите название статьи'})
         self.fields['content'].widget.attrs.update({'class': 'form-control', 'id': "exampleFormControlTextarea1",
                                                     'rows': "4", 'placeholder': 'Введите описание статьи'})
+        self.fields['published'].widget.attrs.update({'class': 'form-check-input', 'type': 'checkbox'})
         self.fields['preview'].widget.attrs.update({'class': 'form-control', 'type': 'file', 'id': 'formFile'})

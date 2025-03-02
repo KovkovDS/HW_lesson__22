@@ -11,7 +11,7 @@
 Ждем Вас у нас за покупками! :)</p>
 <div class="row">
     {% for product in products %}
-    <div class="col-6" style="padding: 70px 70px 0;">
+    <div class="col-6" style="padding: 30px 30px 0;">
         <div class="card text-bg-light">
             <h4 class="card-header p-3 text-center">{{product.name_p}}</h4>
             <img src="{{ product.picture | media_filter }}" class="card-img-top" alt="..."  style="width:400px; height:400px; margin-left:14px">
