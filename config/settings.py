@@ -12,10 +12,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 import os
 from os import getenv
-
 from django.core.management import templates
 from dotenv import load_dotenv
-
 from pathlib import Path
 
 
@@ -133,11 +131,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']
+STATIC_URL = '/static/'
+STATICFILES_DIRS = os.path.join(BASE_DIR, 'static',),
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media',),
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -159,13 +157,13 @@ AUTH_USER_MODEL = 'users.CustomUser'
 
 LOGIN_URL = 'user:login'
 
-HANDLER403 = 'catalog.views.custom_permission_denied'
+HANDLER403 = 'catalog.views'
 
 HANDLER404 = 'catalog.views.page_not_found_view'
 
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.redis.RedisCache',
-        'LOCATION': 'redis://127.0.0.1:6379/1',
+        'LOCATION': os.getenv('LOCATION'),
     }
 }

@@ -2,6 +2,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
+
+import catalog.views
 from blog.forms import BlogArticleForm
 from blog.models import BlogArticle
 from django.urls import reverse_lazy, reverse
@@ -104,7 +106,10 @@ class BlogArticleUpdateView(LoginRequiredMixin, UpdateView):
         article_for_update = super().get_object(queryset)
         user = self.request.user
         if not user.has_perm('blog.change_blogarticle'):
+            # try:
             raise PermissionDenied(f'У вас нет прав для редактирования Статьи "{article_for_update.title}".')
+            # except AttributeError:
+            #     return render(requests, 'error_403.html')
         return article_for_update
 
     def get_success_url(self, **kwargs):
