@@ -24,7 +24,6 @@ class ProductsListView(ListView):
         context = super().get_context_data(**kwargs)
         categories = Category.objects.all()
         category_products = self.request.GET.get('category_id')
-        print(category_products)
         context['categories'] = categories
         context['products'] = ListProductsCategories.get_products_categories(category_products)
         return context
@@ -43,9 +42,9 @@ class FilterCategoryProductsList(ListView):
     template_name = 'home.html'
     context_object_name = 'products'
 
-    def post(self, request, id):
-        products = ListProductsCategories.get_products_categories(id)
-        return redirect('catalog:home', {'filter': products})
+    # def post(self, request, category_id):
+    #     products = ListProductsCategories.get_products_categories(category_id)
+    #     return redirect('catalog:home', {'filter': products})
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -55,31 +54,35 @@ class FilterCategoryProductsList(ListView):
         context['products'] = ListProductsCategories.get_products_categories(category_products)
         return context
 
+    # def get_success_url(self, **kwargs):
+    #     return reverse('catalog:home', args=[self.kwargs.get('category_id')])
 
-class FilteredCategoryProducts(UpdateView):
-    # paginate_by = 4
-    model = Category
-    template_name = 'filter_menu.html'
-    context_object_name = 'category'
+
+class FilteredCategoryProducts(DetailView):
+    model = Product
+    template_name = 'category.html'
+    context_object_name = 'products'
     category = None
+    # success_url = reverse_lazy('catalog:category_products')
 
-    # def get_queryset(self):
-    #     if self.category_products is None:
-    #         queryset = Product.objects.all()
-    #     else:
-    #         # self.category = Category.objects.get(id=self.kwargs['id'])
-    #         category_products = self.request.POST.get('value')
-    #         queryset = ListProductsCategories.get_products_categories(category_products)
-    #     return queryset
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        categories = Category.objects.all()
+        context['categories'] = categories
+        if self.request.method == "GET":
+            # category_products = self.request.POST['choice']
+            category_products = self.request.GET.get("choice")
+            print(category_products)
+            category = Category.objects.filter(pk=category_products)
+            context['category'] = category
+            context['products'] = ListProductsCategories.get_products_categories(category_products)
+        return context
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     categories = Category.objects.all()
-    #     context['categories'] = categories
-    #     return context
-    #
     def get_success_url(self, **kwargs):
-        return reverse('catalog:category_products', args=[self.object.id], kwargs=self.kwargs)
+        return reverse('catalog:category_products', args=[self.kwargs.get('pk')])
+
+    # def get_success_url(self, **kwargs):
+    #     return reverse('catalog:category_products', args=[self.object.id], kwargs=self.kwargs)
 
 
 class Contacts(LoginRequiredMixin, ListView):
