@@ -15,6 +15,11 @@
         </div>
         <a class="p-2 btn btn-outline-secondary" href="{% url 'catalog:contacts' %}">Контакты</a>
     </nav>
+{% if user.is_authenticated %}
+<div>
+<p class="mt-4 mb-auto">Приветствую тебя, {{ user.last_name }} {{ user.first_name }}!</p>
+</div>
+{% endif %}
     <nav class="p-2 me-auto">
         {% if user.is_authenticated %}
             <form method="post" action="{% url 'user:logout' %}" style="display: inline;">

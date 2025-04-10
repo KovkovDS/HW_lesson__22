@@ -1,4 +1,4 @@
-<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+<div class="d-flex align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
     <h5 class="my-0 mr-md-auto font-weight-normal">KODI Store</h5>
     <nav class="p-2 flex-grow-1 ms-3">
         <div class="btn-group ">
@@ -15,6 +15,11 @@
         <a class="p-2 btn btn-outline-primary" href="{% url 'blog:home' %}">Блог</a>
         <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:contacts' %}">Контакты</a>
     </nav>
+{% if user.is_authenticated %}
+<div>
+<p class="mt-4 mb-auto">Приветствую тебя, {{ user.last_name }} {{ user.first_name }}!</p>
+</div>
+{% endif %}
     <nav class="p-2 me-auto">
         {% if user.is_authenticated %}
             <form method="post" action="{% url 'user:logout' %}" style="display: inline;">

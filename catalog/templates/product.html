@@ -20,6 +20,9 @@
             {% if "catalog.can_unpublish_product" in perms %}
             <li class="list-group-item">Опубликован: {{ object.published|yesno:"Да,Нет" }}</li>
             {% endif %}
+            {% if product.owner == user %}
+            <li class="list-group-item">Добавил: {{product.owner.last_name}} {{product.owner.first_name}}</li>
+            {% endif %}
             <li class="list-group-item">Дата добавления: {{object.create_at|date:"d M Y"}}</li>
             <li class="list-group-item">Дата последнего изменения: {{object.updated_at|date:"d M Y"}}</li>
         </ul>
@@ -34,7 +37,7 @@
             Опубликовать</button>
         </form>
         {% endif %}
-        {% if "catalog.delete_product" in perms or product.owner == user%}
+        {% if user.is_superuser or product.owner == user %}
         <a href="{% url 'catalog:deleting_product' object.pk %}?next={{ request.GET.next }}" class="btn btn-outline-danger m-2 text-center" role="button" style="max-width: 255px;">
             Удалить</a>
         {% endif %}

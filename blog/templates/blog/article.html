@@ -9,7 +9,10 @@
     <ul class="list-group list-group-flush">
         <li class="list-group-item">{{object.content}}</li>
         {% if "catalog.can_publish_blogarticle" in perms %}
-        <li class="list-group-item">Опубликован: {{ object.published|yesno:"Да,Нет" }}</li>
+        <li class="list-group-item">Опубликована: {{ object.published|yesno:"Да,Нет" }}</li>
+        {% endif %}
+        {% if object.owner == user %}
+            <li class="list-group-item">Добавил: {{object.owner.last_name}} {{product.owner.first_name}}</li>
         {% endif %}
         <li class="list-group-item">Дата добавления: {{object.create_at|date:"d M Y"}}</li>
         <li class="list-group-item">Просмотров: {{object.number_views}}</li>

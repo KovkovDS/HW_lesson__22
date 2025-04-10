@@ -132,10 +132,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = os.path.join(BASE_DIR, 'static',),
+STATICFILES_DIRS = [BASE_DIR, 'static']
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media',),
+MEDIA_ROOT = [BASE_DIR, 'media']
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -157,7 +157,7 @@ AUTH_USER_MODEL = 'users.CustomUser'
 
 LOGIN_URL = 'user:login'
 
-HANDLER403 = 'catalog.views'
+HANDLER403 = 'catalog.views.custom_permission_denied'
 
 HANDLER404 = 'catalog.views.page_not_found_view'
 
