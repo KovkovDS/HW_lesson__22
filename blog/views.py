@@ -105,7 +105,7 @@ class BlogArticleUpdateView(LoginRequiredMixin, UpdateView):
     def get_object(self, queryset=None):
         article_for_update = super().get_object(queryset)
         user = self.request.user
-        if not user.has_perm('blog.change_blogarticle'):
+        if user.has_perm('blog.change_blogarticle'):
             # try:
             raise PermissionDenied(f'У вас нет прав для редактирования Статьи "{article_for_update.title}".')
             # except AttributeError:

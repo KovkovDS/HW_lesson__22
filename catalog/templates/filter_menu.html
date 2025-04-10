@@ -1,7 +1,7 @@
 <ul class="ms-auto p-2 border-start navbar-nav">
     <li class="fw-medium fst-italic">
     <h4 class="fw-bold">Фильтры</h4>
-    <form method="get" action="{% url 'catalog:category_products' category.id %}" enctype="multipart/form-data">
+    <form method="get" action="category.html" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.non_field_errors }}
         <select class="form-select btn-outline-primary" aria-label="Default select example" name="choice">
