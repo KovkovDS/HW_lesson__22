@@ -12,10 +12,10 @@ from django.views.decorators.cache import cache_page
 from django.utils.decorators import method_decorator
 from catalog.services import ListProductsCategories
 from django.core.cache import cache
+from django.core.paginator import Paginator
 
 
 class ProductsListView(ListView):
-    paginate_by = 4
     model = Product
     template_name = 'home.html'
     context_object_name = 'products'
@@ -26,6 +26,12 @@ class ProductsListView(ListView):
         category_products = self.request.GET.get('category_id')
         context['categories'] = categories
         context['products'] = ListProductsCategories.get_products_categories(category_products)
+        category_products_list = ListProductsCategories.get_products_categories(category_products)
+        paginator = Paginator(category_products_list, 4)
+        page_number = self.request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+        context['products'] = page_obj
+        context['page_obj'] = page_obj
         return context
 
     def get_queryset(self):
@@ -36,53 +42,55 @@ class ProductsListView(ListView):
         return queryset
 
 
-class FilterCategoryProductsList(ListView):
-    paginate_by = 4
-    model = Product
-    template_name = 'home.html'
-    context_object_name = 'products'
-
-    # def post(self, request, category_id):
-    #     products = ListProductsCategories.get_products_categories(category_id)
-    #     return redirect('catalog:home', {'filter': products})
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        categories = Category.objects.all()
-        category_products = self.request.GET.get('category_id')
-        context['categories'] = categories
-        context['products'] = ListProductsCategories.get_products_categories(category_products)
-        return context
-
-    # def get_success_url(self, **kwargs):
-    #     return reverse('catalog:home', args=[self.kwargs.get('category_id')])
-
-
 class FilteredCategoryProducts(DetailView):
-    model = Product
+    model = Category
     template_name = 'category.html'
-    context_object_name = 'products'
     category = None
-    # success_url = reverse_lazy('catalog:category_products')
 
     def get_context_data(self, **kwargs):
+        print(self.object)
         context = super().get_context_data(**kwargs)
         categories = Category.objects.all()
         context['categories'] = categories
-        if self.request.method == "GET":
-            # category_products = self.request.POST['choice']
-            category_products = self.request.GET.get("choice")
-            print(category_products)
-            category = Category.objects.filter(pk=category_products)
-            context['category'] = category
-            context['products'] = ListProductsCategories.get_products_categories(category_products)
+        category_products = self.object.id
+        category_products_list = ListProductsCategories.get_products_categories(category_products)
+        paginator = Paginator(category_products_list, 2)
+        page_number = self.request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+        context['products'] = page_obj
+        context['page_obj'] = page_obj
         return context
+
+
+class FilterCategoryProducts(View):
+    model = Category
+    template_name = 'category.html'
+    category = None
+
+    def get(self, request):
+        category_id = request.GET.get('choice')
+        category = get_object_or_404(Category, pk=category_id)
+        context = {'categories': Category.objects.all()}
+        # category_products = self.object.id
+        category_products_list = ListProductsCategories.get_products_categories(category_id)
+        paginator = Paginator(category_products_list, 2)
+        page_number = self.request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+        context['products'] = category_products_list
+        context['page_obj'] = page_obj
+        return render(request, "category.html", context)
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     categories = Category.objects.all()
+    #     context['categories'] = categories
+    #     category_products = self.request.GET.get('choice')
+    #     # category_products_list = ListProductsCategories.get_products_categories(category_products)
+    #     context['pk'] = category_products
+    #     return context
 
     def get_success_url(self, **kwargs):
         return reverse('catalog:category_products', args=[self.kwargs.get('pk')])
-
-    # def get_success_url(self, **kwargs):
-    #     return reverse('catalog:category_products', args=[self.object.id], kwargs=self.kwargs)
 
 
 class Contacts(LoginRequiredMixin, ListView):

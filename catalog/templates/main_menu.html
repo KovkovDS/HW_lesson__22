@@ -8,7 +8,7 @@
             </button>
             <ul class="dropdown-menu dropdown-menu-dark">
             {% for category in categories %}
-                <li><a class="dropdown-item" href="{% url 'catalog:home' %}?category_id={{ category.id }}">{{ category.name_c }}</a></li>
+                <li><a class="dropdown-item" href="{% url 'catalog:category_products' category.id %}">{{ category.name_c }}</a></li>
             {% endfor %}
             </ul>
         </div>

@@ -1,19 +1,21 @@
 <ul class="ms-auto p-2 border-start navbar-nav">
     <li class="fw-medium fst-italic">
     <h4 class="fw-bold">Фильтры</h4>
-    <form method="get" action="category.html" enctype="multipart/form-data">
-        {% csrf_token %}
+    <form method="get" action="" enctype="multipart/form-data">
+{#        {% csrf_token %}#}
         {{ form.non_field_errors }}
         <select class="form-select btn-outline-primary" aria-label="Default select example" name="choice">
             <option selected>Выберите категорию товаров</option>
             {% for category in categories %}
-            <option value="{{ category.id }}">{{ category.name_c }}
+            <option value="{{ category.id }}">
+            {{ category.name_c }}
+{#                <a class="dropdown-item" href="{% url 'catalog:category_products' category.id %}">{{ category.name_c }}</a>#}
             </option>
             {% endfor %}
         </select>
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-{#             <a class="dropdown-item" href="{% url 'catalog:home' %}?category_id={{ category.id }}">Отфильтровать</a>#}
-            <button type="submit" class="btn btn-outline-primary mt-2">Отфильтровать
+{#             <a class="dropdown-item" href="{% url 'catalog:category_products' category.id %}">Отфильтровать</a>#}
+            <button type="submit" class="btn btn-outline-primary mt-2" href="{% url 'catalog:home' %}?category_id={{ value }}">Отфильтровать
             </button>
         </div>
     </form>

@@ -2,7 +2,7 @@ from django.urls import path
 from catalog.apps import CatalogConfig
 from .views import (ProductsListView, ProductDetailView, ProductCreateView, ProductUpdateView, ProductDeleteView,
                     AddedProduct, Contacts, ModerationProductView, custom_permission_denied,
-                    FilterCategoryProductsList, FilteredCategoryProducts, )
+                    FilteredCategoryProducts, FilterCategoryProducts, )
 
 app_name = CatalogConfig.name
 
@@ -16,6 +16,7 @@ urlpatterns = [
     path('product/<int:pk>/added/', AddedProduct.as_view(), name='added_product'),
     path('product/<int:pk>/published/', ModerationProductView.as_view(), name='published_product'),
     path('category/<int:pk>/products/', FilteredCategoryProducts.as_view(), name='category_products'),
+    path('category/filter/', FilterCategoryProducts.as_view(), name='filter_products'),
     # path('error-403/', custom_permission_denied, name='error-403'),
 ]
 
