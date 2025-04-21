@@ -1,5 +1,5 @@
 from django import forms
-from .models import Product, Contact
+from .models import Product, Contact, Category
 from django.core.exceptions import ValidationError
 from django.conf import settings
 
